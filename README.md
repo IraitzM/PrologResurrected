@@ -1,0 +1,586 @@
+# Logic Quest: A Prolog Learning Adventure
+
+An 80s-style terminal game that teaches Prolog and logic programming through interactive storytelling and puzzles.
+
+> **Development Status**: Core validation, tutorial content, puzzle management systems, and web interface with Reflex framework are complete and fully functional. Advanced puzzle implementation and story integration are in progress.
+
+## Story
+You are a junior programmer at Cyberdyne Systems in 1985. The company's AI research computer has malfunctioned, and its logic circuits are scrambled. You must navigate through the system's memory banks, solving logical puzzles to restore order and prevent a complete system meltdown.
+
+## Features
+
+### ✅ Implemented
+- **Comprehensive Prolog Validation**: Robust syntax validation with detailed error messages and hints
+- **Hello World Tutorial Content**: Complete tutorial structure with step-by-step learning progression
+- **Tutorial Management System**: Progress tracking, navigation, and session management
+- **Puzzle Management Framework**: Complete base classes and management system for Prolog puzzles
+- **Educational Content**: Rich explanations, examples, and practice exercises
+- **Development Tooling**: Task runner, testing framework, and code quality tools
+
+### ✅ Recently Implemented
+- **Web-Based Retro Terminal**: Modern web interface with authentic 80s terminal styling using Reflex framework
+- **Enhanced Terminal Rendering**: Advanced color-coded terminal output with support for multiple text colors (green, cyan, yellow, red, white) and different output types including explanation boxes for educational content
+- **Robust Terminal Display**: Defensive programming improvements with safe array bounds checking to prevent rendering errors
+- **Interactive Tutorial System**: Web-based implementation of tutorial content with terminal interface
+- **80s Cyberpunk Interface**: Complete visual styling with neon colors, glowing effects, and ASCII art
+- **Reflex Application Structure**: Full web app with routing, state management, and responsive design
+- **UI Component Library**: Custom cyberpunk-styled components (buttons, text, terminal windows, containers)
+- **Optimized State Management**: Lazy initialization pattern for game objects to prevent serialization issues
+- **Improved Terminal Layout**: Full-height terminal interface with optimized space utilization and fixed header/input areas
+
+### 🚧 In Development
+- **Advanced Puzzle Implementation**: Concrete puzzle classes for all Prolog concepts using the management framework
+- **Complete Story Integration**: Full narrative progression with puzzle integration
+- **End-to-End Testing**: Comprehensive Playwright-based browser automation tests
+
+### 🎯 Planned
+- Complete 80s cyberpunk atmosphere
+- Advanced Prolog concepts (recursion, backtracking)
+- Cross-platform web deployment
+
+## Getting Started
+
+### Prerequisites
+- Python 3.13+
+- uv package manager
+
+### Installation
+```bash
+# Install dependencies
+uv sync
+
+# Run the web application
+reflex run
+
+# Alternative: Run with Python directly
+python main.py
+```
+
+The application will start a local web server (typically at http://localhost:3000) where you can access the retro terminal interface.
+
+**Note**: The application can be run either through `reflex run` (which uses the prologresurrected package) or `python main.py` (direct execution). Both entry points provide the same core functionality with robust error handling, but with different UI implementations:
+- **prologresurrected package**: Single-panel terminal interface with centered explanation boxes
+- **main.py**: Dual-panel interface with terminal on left and information panel on right
+
+### Quick Demo
+```bash
+# Demo validation utilities and puzzle system
+task demo
+```
+
+### Development
+
+#### Using Task Runner (Recommended)
+This project uses [Task](https://taskfile.dev/) for command management:
+
+```bash
+# Show all available tasks
+task
+
+# Set up development environment
+task setup
+
+# Run unit tests
+task test
+
+# Run tests in watch mode
+task test-watch
+
+# Run linting and formatting
+task lint
+
+# Run development server
+task dev
+
+# Run all validation checks (tests + linting)
+task validate
+
+# Run CI pipeline
+task ci
+
+# Demo validation utilities and puzzle system
+task demo
+```
+
+#### Direct Commands
+```bash
+# Run the web application
+reflex run
+
+# Run unit tests
+uv run pytest tests/ -v
+
+# Run specific test file
+uv run pytest tests/test_validation.py -v
+
+# Run linting and formatting
+uv run ruff check .
+uv run ruff format .
+
+# Run end-to-end tests (when implemented)
+uv run playwright test
+```
+
+## Project Structure
+```
+├── prologresurrected/        # Main application package
+│   └── prologresurrected.py # Reflex app entry point with web interface
+├── game/                     # Core game logic modules
+│   ├── __init__.py
+│   ├── validation.py         # Prolog syntax validation utilities
+│   ├── tutorial_content.py   # Tutorial content, navigation, and progress tracking
+│   ├── puzzles.py           # Puzzle management framework and base classes
+│   ├── terminal.py          # Terminal interface and styling (Reflex-based)
+│   └── story.py             # Narrative engine and story progression
+├── components/               # Reflex UI components
+│   ├── __init__.py
+│   └── retro_ui.py          # 80s cyberpunk styling components (neon colors, terminal windows, ASCII art, explanation boxes)
+├── tests/                    # Comprehensive test suite
+│   ├── test_validation.py    # Validation system tests
+│   ├── test_tutorial_content.py # Tutorial content tests
+│   ├── test_puzzles.py       # Puzzle management tests
+│   ├── test_story.py         # Story engine tests
+│   ├── test_terminal.py      # Terminal interface tests
+│   └── e2e/                  # End-to-end browser tests
+│       ├── test_welcome_screen.py
+│       ├── test_tutorial_flow.py
+│       ├── test_adventure_mode.py
+│       └── test_full_user_journey.py
+├── .kiro/
+│   └── specs/
+│       └── hello-world-prolog/  # Tutorial specification documents
+├── docs/                     # Documentation (Quarto-based)
+├── main.py                   # Alternative entry point (same implementation as prologresurrected)
+├── rxconfig.py               # Reflex configuration file
+├── demo.py                   # Quick demo of validation features
+├── pyproject.toml            # Project configuration with Reflex dependencies
+├── Taskfile.yml              # Task runner configuration
+└── README.md
+```
+
+## Tutorial System Features
+
+### Hello World Prolog Tutorial
+The game includes a comprehensive beginner tutorial that teaches Prolog fundamentals:
+
+- **Step-by-Step Learning**: Six structured tutorial steps from introduction to completion
+- **Interactive Exercises**: Hands-on practice with fact creation and query writing
+- **Progress Tracking**: Complete session management with user progress persistence
+- **Content Navigation**: Forward/backward navigation through tutorial steps
+- **Educational Content**: Rich explanations, examples, and practice exercises
+
+### Tutorial Content Structure
+- **Introduction**: Overview of Prolog and logic programming concepts
+- **Facts Explanation**: Understanding Prolog fact syntax and structure
+- **Fact Creation**: Interactive exercise to create your first Prolog fact
+- **Queries Explanation**: Learning to ask questions with Prolog queries
+- **Variables Introduction**: Using variables to find multiple solutions
+- **Completion**: Summary and transition to advanced concepts
+
+### Tutorial Management Classes
+- **TutorialStep**: Enumeration of tutorial steps for type-safe navigation
+- **TutorialProgress**: Tracks user advancement, mistakes, hints, and completion times
+- **TutorialNavigator**: Handles step navigation and content loading
+- **TutorialSession**: Manages complete tutorial sessions with progress persistence
+
+## Puzzle Management System
+
+The game includes a comprehensive puzzle management framework that provides the foundation for all Prolog learning challenges:
+
+### Core Components
+
+#### BasePuzzle Abstract Class
+All puzzles inherit from `BasePuzzle`, which provides:
+- **Puzzle Metadata**: ID, title, difficulty level tracking
+- **Attempt Tracking**: Counts attempts, hints used, completion status
+- **Scoring System**: Dynamic scoring based on performance (attempts, hints)
+- **Solution Validation**: Abstract interface for validating user solutions
+- **Hint System**: Progressive hint delivery with escalating specificity
+- **Progress Management**: Reset functionality and state tracking
+
+#### Puzzle Classification System
+- **PuzzleDifficulty**: BEGINNER, INTERMEDIATE, ADVANCED, EXPERT levels
+- **PuzzleType**: Categorizes puzzles by concept (FACT_CREATION, QUERY_WRITING, RULE_DEFINITION, PATTERN_MATCHING, LOGICAL_DEDUCTION)
+- **PuzzleResult**: Structured results with success status, score, feedback, and performance metrics
+
+#### PuzzleManager
+Centralized management system that handles:
+- **Puzzle Registration**: Dynamic puzzle loading and organization
+- **Progress Tracking**: Player statistics, completion tracking, concept mastery
+- **Puzzle Selection**: Intelligent next-puzzle recommendation based on player level
+- **Session Management**: Current puzzle state, solution submission, hint delivery
+- **Performance Analytics**: Comprehensive statistics and progress summaries
+
+### Puzzle Framework Features
+
+#### Scoring Algorithm
+- **Base Score**: 100 points maximum per puzzle
+- **Attempt Penalty**: -10 points per additional attempt (beyond first)
+- **Hint Penalty**: -15 points per hint used
+- **Minimum Score**: 10 points guaranteed for completion
+
+#### Validation Integration
+- Seamless integration with the Prolog validation system
+- Structured error feedback through ValidationResult
+- Component extraction for advanced puzzle checking
+- Custom validation logic per puzzle type
+
+#### Progress Tracking
+- **Player Statistics**: Total score, puzzles completed, attempts, hints used
+- **Concept Mastery**: Tracks which Prolog concepts have been learned
+- **Completion Percentage**: Overall progress through available puzzles
+- **Performance Metrics**: Average scores and learning analytics
+
+#### Architectural Benefits
+- **Extensible Design**: Easy addition of new puzzle types through inheritance
+- **Separation of Concerns**: Clear distinction between puzzle logic, validation, and presentation
+- **Type Safety**: Comprehensive use of enums and dataclasses for robust state management
+- **Testability**: Abstract base class enables comprehensive unit testing of puzzle behavior
+- **Scalability**: Manager pattern supports large numbers of puzzles with efficient organization
+
+### Example Puzzle Implementation
+
+The framework includes `SimpleFactPuzzle` as a reference implementation:
+- Validates creation of specific Prolog facts
+- Progressive hint system with 4 levels of assistance
+- Integration with PrologValidator for syntax checking
+- Semantic validation for puzzle-specific requirements
+
+## State Management Architecture
+
+The application uses an optimized state management pattern specifically designed for Reflex applications:
+
+### Key Features
+- **Lazy Initialization**: Game objects (TutorialSession, StoryEngine, PuzzleManager) are created only when needed
+- **Serialization Safety**: Prevents issues with Reflex's state serialization by avoiding direct object instantiation in state
+- **Property-Based Access**: Clean, transparent interface for accessing game components
+- **Memory Efficiency**: Objects are instantiated on-demand, reducing initial memory footprint
+
+### Implementation Pattern
+```python
+class GameState(rx.State):
+    # Initialize as None to avoid serialization issues
+    _tutorial_session = None
+    _story_engine = None
+    _puzzle_manager = None
+
+    @property
+    def tutorial_session(self):
+        if self._tutorial_session is None:
+            self._tutorial_session = TutorialSession()
+        return self._tutorial_session
+```
+
+This pattern ensures that complex game objects are properly managed within Reflex's state system while maintaining clean, readable code.
+
+## Validation Features
+The game includes a robust Prolog validation system that provides:
+
+- **Fact Validation**: Validates Prolog facts with detailed error messages and hints
+- **Query Validation**: Validates Prolog queries with comprehensive syntax checking
+- **Component Extraction**: Parses predicates, arguments, and statement structure
+- **Error Analysis**: Specific feedback for common syntax mistakes with helpful suggestions
+- **Encouraging Messages**: Supportive feedback to keep learners motivated during the learning process
+- **Structured Results**: ValidationResult dataclass with detailed feedback components
+
+### Key Validation Capabilities
+- Checks for proper fact syntax: `predicate(arg1, arg2).`
+- Validates query syntax: `?- predicate(arg1, arg2).`
+- Detects common errors: missing periods, incorrect capitalization, malformed parentheses
+- Provides specific hints for each type of error
+- Extracts and validates predicate names and arguments
+- Supports atoms, variables, and numbers in arguments
+- Returns structured ValidationResult with detailed feedback
+
+### ValidationResult Structure
+The validation system returns a `ValidationResult` dataclass containing:
+- `is_valid`: Boolean indicating if the input is syntactically correct
+- `error_message`: Human-readable error description (if invalid)
+- `hint`: Helpful suggestion for fixing the error (if invalid)  
+- `parsed_components`: Dictionary of extracted syntax components (if valid)
+
+### Example Usage
+
+#### Puzzle Management System
+```python
+from game.puzzles import PuzzleManager, SimpleFactPuzzle, PuzzleDifficulty
+
+# Initialize puzzle manager
+manager = PuzzleManager()
+
+# Register puzzles
+simple_puzzle = SimpleFactPuzzle()
+manager.register_puzzle(simple_puzzle)
+
+# Start a puzzle
+success = manager.start_puzzle("simple_fact_1")
+if success:
+    # Get puzzle description
+    description = manager.current_puzzle.get_description()
+    print(description)  # "Create a Prolog fact that states 'Alice likes chocolate'..."
+    
+    # Submit a solution
+    result = manager.submit_solution("likes(alice, chocolate).")
+    print(f"Success: {result.success}")  # True
+    print(f"Score: {result.score}")      # 100 (perfect score)
+    print(f"Feedback: {result.feedback}") # "Perfect! You solved it on the first try..."
+
+# Get player progress
+stats = manager.get_player_stats()
+print(f"Total Score: {stats['total_score']}")
+print(f"Puzzles Completed: {stats['puzzles_completed']}")
+
+# Get progress summary
+summary = manager.get_progress_summary()
+print(f"Completion: {summary['completion_percentage']}%")
+print(f"Average Score: {summary['average_score']}")
+```
+
+#### Custom Puzzle Creation
+```python
+from game.puzzles import BasePuzzle, PuzzleDifficulty, ValidationResult
+from game.validation import PrologValidator
+
+class CustomQueryPuzzle(BasePuzzle):
+    def __init__(self):
+        super().__init__(
+            puzzle_id="custom_query_1",
+            title="Write Your First Query",
+            difficulty=PuzzleDifficulty.BEGINNER
+        )
+    
+    def get_description(self) -> str:
+        return "Write a query to ask if Alice likes chocolate."
+    
+    def validate_solution(self, user_input: str) -> ValidationResult:
+        # Use the validation system
+        result = PrologValidator.validate_query(user_input)
+        if not result.is_valid:
+            return result
+        
+        # Check semantic correctness
+        components = result.parsed_components
+        if (components.get("predicate") == "likes" and 
+            "alice" in components.get("arguments", []) and
+            "chocolate" in components.get("arguments", [])):
+            return ValidationResult(is_valid=True)
+        
+        return ValidationResult(
+            is_valid=False,
+            error_message="Query is syntactically correct but doesn't ask about Alice and chocolate.",
+            hint="Try: ?- likes(alice, chocolate)."
+        )
+    
+    def get_hint(self, hint_level: int) -> str:
+        hints = [
+            "Queries start with '?-'",
+            "Use the 'likes' predicate",
+            "Include both 'alice' and 'chocolate' as arguments",
+            "The complete answer is: ?- likes(alice, chocolate)."
+        ]
+        return hints[min(hint_level - 1, len(hints) - 1)]
+    
+    def get_expected_solution(self) -> str:
+        return "?- likes(alice, chocolate)."
+```
+
+#### Tutorial System
+```python
+from game.tutorial_content import TutorialSession, TutorialStep
+
+# Start a new tutorial session
+session = TutorialSession()
+session.start_session()
+
+# Get current step content
+content = session.get_current_content()
+print(content['title'])  # "🚀 Welcome to Prolog Programming"
+
+# Navigate through tutorial
+session.advance_step()  # Move to next step
+session.go_back_step()  # Go back to previous step
+
+# Track user progress
+session.record_user_input('fact', 'likes(bob, pizza).')
+session.record_mistake()  # Track errors for analytics
+session.record_hint_used()  # Track when hints are shown
+
+# Get session summary
+summary = session.get_session_summary()
+print(f"Completion: {summary['completion_percentage']}%")
+print(f"Facts created: {summary['facts_created']}")
+```
+
+#### Validation System
+```python
+from game.validation import PrologValidator, get_encouraging_message
+
+# Validate a fact
+result = PrologValidator.validate_fact("likes(alice, chocolate).")
+print(result.is_valid)  # True
+print(result.parsed_components)  # {'predicate': 'likes', 'arguments': ['alice', 'chocolate'], 'full_fact': '...'}
+
+# Validate a query
+result = PrologValidator.validate_query("?- likes(alice, X).")
+print(result.is_valid)  # True
+
+# Handle validation errors with helpful feedback
+result = PrologValidator.validate_fact("likes(alice, chocolate)")  # Missing period
+print(result.error_message)  # "Missing period at the end."
+print(result.hint)  # "All Prolog facts must end with a period (.)."
+
+# Get encouraging messages for learners
+message = get_encouraging_message()
+print(message)  # Random supportive message
+```
+
+## Web Interface Features
+
+### Cyberpunk Visual Design
+- **Neon Color Palette**: Green, cyan, yellow, red, and pink neon colors with glow effects
+- **Retro Terminal Windows**: Authentic terminal styling with title bars and window controls
+- **ASCII Art Display**: Cyberdyne Systems logo and decorative elements
+- **Gradient Backgrounds**: Dark cyberpunk gradients with subtle lighting effects
+- **Glowing Borders**: Neon border effects with box shadows for depth
+
+### Interactive Components
+- **Cyberpunk Buttons**: Hover effects with color transitions and glow animations
+- **Enhanced Terminal Display**: Multi-color terminal output with proper color coding for different message types and robust error handling
+- **Full-Height Terminal Interface**: Optimized layout that utilizes full browser viewport with fixed header (60px) and input area (50px)
+- **Scrollable Output Area**: Terminal output area automatically scrolls and adapts to available screen space
+- **Terminal Input**: Real-time command input with monospace font styling
+- **Explanation Boxes**: Centered content boxes with retro styling for displaying educational content and explanations
+- **Defensive Programming**: Safe array bounds checking prevents rendering errors and ensures stable terminal display
+- **Responsive Layout**: Adapts to different screen sizes and devices with dynamic height calculations
+- **State Management**: Persistent game state across browser sessions
+- **Dynamic Content**: Real-time updates without page refreshes
+
+### Reflex Framework Integration
+- **Component-Based Architecture**: Reusable UI components for consistent styling including explanation boxes for educational content
+- **Server-Side State**: Python-based state management with automatic synchronization
+- **Lazy Initialization**: Game objects (TutorialSession, StoryEngine, PuzzleManager) are initialized on-demand to prevent serialization issues
+- **Property-Based Access**: Clean interface for accessing game components through Python properties
+- **Hot Reload**: Development server with automatic updates on code changes
+- **Cross-Platform**: Runs on any device with a modern web browser
+
+## Technology Stack
+- **Framework**: Reflex (Python web framework) - configured as "prologresurrected" app
+- **Language**: Python 3.13+
+- **Package Manager**: uv for fast dependency management
+- **Testing**: pytest for unit tests, Playwright for end-to-end testing
+- **Code Quality**: Ruff for linting and formatting
+- **Task Runner**: Task for development workflow automation
+- **Database**: SQLite for development (configured in rxconfig.py)
+- **State Management**: Lazy initialization pattern for optimal Reflex performance
+- **Deployment**: Web-based with cross-platform support
+
+## Deployment
+
+### Local Development
+```bash
+# Run development server
+reflex run
+```
+
+### Production Deployment
+```bash
+# Build for production
+reflex export
+
+# Deploy to hosting platform
+reflex deploy
+```
+
+The application is configured as "prologresurrected" in `rxconfig.py` and uses SQLite for development data storage. The web interface provides cross-platform access through any modern web browser.
+
+### State Management Architecture
+
+The application uses an optimized state management pattern for Reflex:
+
+- **Lazy Initialization**: Game objects are created on-demand using Python properties
+- **Serialization Safety**: Prevents issues with Reflex's state serialization by avoiding direct object instantiation
+- **Clean Interface**: Properties provide transparent access to game components
+- **Memory Efficiency**: Objects are only created when actually needed
+
+```python
+# Example of the lazy initialization pattern
+@property
+def tutorial_session(self):
+    if self._tutorial_session is None:
+        self._tutorial_session = TutorialSession()
+    return self._tutorial_session
+```
+
+## Testing
+The project includes comprehensive unit tests covering:
+
+### Puzzle Management System Tests
+- BasePuzzle abstract class functionality
+- PuzzleManager registration and selection
+- Scoring algorithm accuracy
+- Progress tracking and statistics
+- Puzzle result generation and feedback
+- Hint system progression
+- Custom puzzle implementation patterns
+
+### Tutorial System Tests
+- Tutorial content structure and navigation
+- Progress tracking and session management
+- Step advancement and completion logic
+- Content loading and step enumeration
+- Tutorial session state management
+- Lazy initialization patterns for Reflex compatibility
+
+### Validation System Tests
+- Basic validation functionality
+- Comprehensive fact validation scenarios
+- Comprehensive query validation scenarios
+- Component extraction and parsing
+- Error message generation
+- Encouraging message system
+- ValidationResult data structure
+
+Run tests with:
+```bash
+# Using Task runner (recommended)
+task test
+
+# Or directly with pytest
+uv run pytest tests/ -v
+
+# Run specific test files
+uv run pytest tests/test_tutorial_content.py -v
+uv run pytest tests/test_validation.py -v
+uv run pytest tests/test_puzzles.py -v
+
+# Run all validation checks (tests + linting)
+task validate
+```
+
+## Learning Objectives
+
+### Hello World Tutorial Objectives
+- Understanding what Prolog is and how it differs from other programming languages
+- Learning to create and understand Prolog facts with proper syntax
+- Writing your first Prolog fact with guided practice
+- Understanding how to ask questions using Prolog queries
+- Using variables in queries to find multiple solutions
+- Building confidence for advanced Prolog concepts
+
+### Advanced Game Objectives
+- **Progressive Skill Building**: Structured learning path from beginner to expert level puzzles
+- **Concept Mastery**: Facts, rules, unification, pattern matching, backtracking, and recursion
+- **Problem-Solving Skills**: Complex logical reasoning through interactive challenges
+- **Performance Tracking**: Score-based progression with detailed feedback and analytics
+- **Adaptive Learning**: Hint systems and difficulty progression based on player performance
+- **Logic Programming Paradigms**: Deep understanding of declarative programming concepts
+
+## Tutorial Content
+The Hello World tutorial includes rich educational content:
+
+- **Engaging Explanations**: Clear, beginner-friendly explanations of each concept
+- **Interactive Examples**: Hands-on practice with immediate feedback
+- **Progressive Difficulty**: Concepts build naturally from simple to more complex
+- **Cyberpunk Theme**: 80s-style narrative woven throughout the learning experience
+- **Practice Exercises**: Guided exercises with validation and hints
+- **Encouraging Feedback**: Supportive messages to maintain learner motivation

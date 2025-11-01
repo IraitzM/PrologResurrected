@@ -1,0 +1,1 @@
+"""Logic Quest - A Prolog Learning Game package."""

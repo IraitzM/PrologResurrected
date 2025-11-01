@@ -1,0 +1,275 @@
+---
+title: "Prolog Concepts"
+---
+
+## Overview
+
+Logic Quest teaches Prolog through a carefully structured progression of concepts. Each level builds upon previous knowledge, creating a solid foundation in logic programming.
+
+## Core Concepts Covered
+
+### 1. Facts - The Foundation of Knowledge
+
+**What are Facts?**
+Facts are unconditional statements of truth in Prolog. They represent basic knowledge about the world.
+
+**Syntax:**
+```prolog
+predicate(argument1, argument2, ...).
+```
+
+**Examples:**
+```prolog
+likes(alice, chocolate).
+parent(tom, bob).
+employee(sarah, tech_corp).
+color(grass, green).
+```
+
+**Key Learning Points:**
+- Facts always end with a period (.)
+- Predicate names start with lowercase letters
+- Arguments can be atoms, numbers, or variables
+- Facts form the knowledge base of your program
+
+### 2. Queries - Asking Questions
+
+**What are Queries?**
+Queries are questions you ask Prolog about the facts and rules in your knowledge base.
+
+**Syntax:**
+```prolog
+?- predicate(argument1, argument2, ...).
+```
+
+**Examples:**
+```prolog
+?- likes(alice, chocolate).     % Does Alice like chocolate?
+?- parent(tom, bob).            % Is Tom Bob's parent?
+?- employee(sarah, tech_corp).  % Does Sarah work at Tech Corp?
+```
+
+**Key Learning Points:**
+- Queries start with `?-`
+- Prolog answers "yes" (true) or "no" (false)
+- Queries can test existing knowledge
+- They form the basis for more complex reasoning
+
+### 3. Variables - Finding Multiple Solutions
+
+**What are Variables?**
+Variables in Prolog start with uppercase letters and can match any value. They allow you to find multiple solutions to queries.
+
+**Syntax:**
+```prolog
+?- predicate(Variable, argument).
+?- predicate(X, Y).
+```
+
+**Examples:**
+```prolog
+?- likes(alice, X).        % What does Alice like?
+?- likes(Person, pizza).   % Who likes pizza?
+?- parent(X, Y).           % Find all parent-child relationships
+```
+
+**Key Learning Points:**
+- Variables start with uppercase letters (X, Person, Thing)
+- They can match any value in the knowledge base
+- One query can return multiple solutions
+- Variables enable pattern matching and discovery
+
+### 4. Rules - Logical Implications
+
+**What are Rules?**
+Rules define logical relationships and allow Prolog to derive new knowledge from existing facts.
+
+**Syntax:**
+```prolog
+head :- body.
+conclusion :- condition1, condition2.
+```
+
+**Examples:**
+```prolog
+grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+happy(X) :- likes(X, chocolate), sunny(today).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+```
+
+**Key Learning Points:**
+- Rules have a head (conclusion) and body (conditions)
+- The `:-` symbol means "if" or "is true when"
+- Commas in the body mean "and"
+- Rules enable logical deduction and inference
+
+### 5. Unification - Pattern Matching
+
+**What is Unification?**
+Unification is Prolog's method of matching patterns and binding variables to values.
+
+**How it Works:**
+- Prolog tries to match query patterns with facts/rules
+- Variables get bound to specific values during matching
+- Complex structures can be unified recursively
+
+**Examples:**
+```prolog
+% Fact: person(alice, 25, programmer)
+% Query: ?- person(Name, Age, Job).
+% Result: Name = alice, Age = 25, Job = programmer
+
+% Fact: likes(bob, food(pizza, italian))
+% Query: ?- likes(bob, food(X, italian)).
+% Result: X = pizza
+```
+
+**Key Learning Points:**
+- Unification happens automatically during query resolution
+- Variables get bound to make patterns match
+- Complex data structures can be unified
+- Understanding unification is key to Prolog mastery
+
+### 6. Backtracking - Exploring Alternatives
+
+**What is Backtracking?**
+Backtracking is Prolog's systematic method of exploring all possible solutions to a query.
+
+**How it Works:**
+1. Try the first matching fact/rule
+2. If it leads to success, report the solution
+3. If it fails, backtrack and try the next alternative
+4. Continue until all possibilities are exhausted
+
+**Example:**
+```prolog
+% Facts:
+likes(alice, chocolate).
+likes(alice, ice_cream).
+likes(bob, pizza).
+
+% Query: ?- likes(alice, X).
+% Solutions found through backtracking:
+% X = chocolate ;
+% X = ice_cream
+```
+
+**Key Learning Points:**
+- Prolog automatically explores all possible solutions
+- Backtracking enables finding multiple answers
+- It's fundamental to Prolog's search strategy
+- Understanding backtracking helps predict program behavior
+
+### 7. Recursion - Elegant Problem Solving
+
+**What is Recursion in Prolog?**
+Recursion allows rules to refer to themselves, enabling elegant solutions to complex problems.
+
+**Structure:**
+```prolog
+% Base case - stops the recursion
+predicate(base_condition).
+
+% Recursive case - calls itself with simpler input
+predicate(input) :- 
+    condition,
+    predicate(simpler_input).
+```
+
+**Classic Example - Ancestor Relationship:**
+```prolog
+% Base case: parent is an ancestor
+ancestor(X, Y) :- parent(X, Y).
+
+% Recursive case: ancestor of ancestor
+ancestor(X, Z) :- 
+    parent(X, Y), 
+    ancestor(Y, Z).
+```
+
+**Key Learning Points:**
+- Always define a base case to stop recursion
+- Recursive case should work toward the base case
+- Recursion enables processing of arbitrary-depth structures
+- It's essential for many Prolog algorithms
+
+## Learning Progression
+
+### Beginner Level (Tutorial)
+- Understand what Prolog is and how it differs from other languages
+- Create simple facts with proper syntax
+- Write basic queries to test knowledge
+- Use variables to find multiple solutions
+
+### Intermediate Level (Levels 1-2)
+- Build knowledge bases with multiple related facts
+- Write rules that define logical relationships
+- Understand how Prolog derives new knowledge
+- Debug syntax errors and logical mistakes
+
+### Advanced Level (Levels 3-4)
+- Master unification and pattern matching
+- Understand backtracking and search strategies
+- Write complex rules with multiple conditions
+- Solve multi-step logical puzzles
+
+### Expert Level (Level 5)
+- Design recursive solutions to complex problems
+- Understand the relationship between recursion and iteration
+- Optimize Prolog programs for efficiency
+- Apply logic programming to real-world problems
+
+## Practical Applications
+
+### Database Queries
+Prolog excels at querying relational data:
+```prolog
+% Employee database
+employee(alice, engineering, 75000).
+employee(bob, marketing, 65000).
+manager(charlie, engineering).
+
+% Find all engineers
+?- employee(Name, engineering, Salary).
+
+% Find employees earning over 70k
+?- employee(Name, Dept, Salary), Salary > 70000.
+```
+
+### Family Trees
+Model complex relationships:
+```prolog
+parent(tom, bob).
+parent(tom, liz).
+parent(bob, ann).
+parent(bob, pat).
+
+% Define derived relationships
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+cousin(X, Y) :- grandparent(Z, X), grandparent(Z, Y), \+ sibling(X, Y).
+```
+
+### Puzzle Solving
+Solve logical puzzles systematically:
+```prolog
+% N-Queens problem
+% Sudoku solver
+% Graph coloring
+% Path finding
+```
+
+## Next Steps
+
+After mastering these concepts in Logic Quest:
+
+1. **Explore Advanced Prolog**: Learn about cut (!), negation, and meta-predicates
+2. **Study Constraint Logic Programming**: Solve optimization problems
+3. **Apply to AI**: Use Prolog for expert systems and knowledge representation
+4. **Practice with Real Projects**: Build actual applications using your skills
+
+The concepts learned in Logic Quest provide a solid foundation for advanced logic programming and artificial intelligence applications. Each puzzle and challenge reinforces these fundamentals while building practical problem-solving skills.
+
+The concepts learned in Logic Quest are presented through an enhanced terminal interface with centered explanation boxes that provide clear, retro-styled educational content display. The terminal features robust error handling and defensive programming to ensure stable, reliable presentation of learning materials.
+
+Ready to put these concepts into practice? [Start playing](getting-started.qmd) Logic Quest!

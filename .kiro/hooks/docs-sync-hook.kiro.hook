@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Documentation Sync",
+  "description": "Monitors all Python source files and project configuration files for changes, then automatically updates the README.md and any documentation to reflect the current state of the codebase",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "*.py",
+      "game/*.py",
+      "requirements.txt",
+      "pyproject.toml"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source code has been modified in this Python project. Please review the changes and update the README.md file to ensure it accurately reflects the current functionality, features, and usage instructions. If there is a /docs folder, also update relevant documentation there. Focus on keeping the documentation synchronized with the actual implementation, including any new features, changed APIs, or updated dependencies."
+  }
+}

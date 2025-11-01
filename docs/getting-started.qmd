@@ -1,0 +1,147 @@
+---
+title: "Getting Started"
+---
+
+## Prerequisites
+
+Before diving into Logic Quest, ensure you have the following installed:
+
+- **Python 3.13+**: The game requires Python 3.13 or later
+- **uv package manager**: Fast Python package manager for dependency management
+
+### Installing uv
+
+If you don't have uv installed, you can install it using:
+
+```bash
+# On macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# On Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Or with pip
+pip install uv
+```
+
+## Installation
+
+1. **Clone or download the project**
+2. **Install dependencies**:
+   ```bash
+   uv sync
+   ```
+
+3. **Run the web application**:
+   ```bash
+   reflex run
+   
+   # Alternative: Run with Python directly
+   python main.py
+   ```
+
+   This will start a local web server (typically at http://localhost:3000) where you can access the game through your browser.
+
+   **Note**: The application is configured as "prologresurrected" in the Reflex configuration, with optimized state management for smooth web performance. Both entry points provide the same functionality.
+
+## Development Setup
+
+If you want to contribute or modify the game:
+
+### Using Task Runner (Recommended)
+
+Install [Task](https://taskfile.dev/) for streamlined development:
+
+```bash
+# Show all available commands
+task
+
+# Set up development environment
+task setup
+
+# Run tests
+task test
+
+# Run linting and formatting
+task lint
+
+# Run all validation checks
+task validate
+```
+
+### Direct Commands
+
+```bash
+# Run unit tests
+uv run pytest tests/ -v
+
+# Run linting
+uv run ruff check .
+uv run ruff format .
+
+# Demo validation utilities
+task demo
+```
+
+## First Run
+
+When you first start Logic Quest in your web browser, you'll see:
+
+1. **Welcome Screen**: Cyberpunk-styled interface with ASCII art and neon colors
+2. **Tutorial Option**: "Start Hello World Tutorial" button for beginners
+3. **Main Adventure**: "Begin Main Adventure" button for the full experience
+4. **Full-Height Terminal Interface**: Optimized terminal layout that uses the entire browser viewport with authentic 80s styling and multi-color text support (green, cyan, yellow, red, white)
+
+### Recommended Path
+
+For beginners, we recommend starting with the **Hello World Tutorial**:
+
+- Learn basic Prolog syntax step-by-step
+- Practice creating facts and writing queries
+- Get comfortable with the terminal interface
+- Build confidence before tackling advanced concepts
+
+### Navigation
+
+- **Click buttons**: Navigate between game modes and options
+- **Type commands**: Interact with the terminal interface
+- **Enter key**: Submit commands in the terminal
+- **Web interface**: Full browser-based experience with responsive design
+
+## Troubleshooting
+
+### Common Issues
+
+**"Command not found: uv"**
+- Make sure uv is installed and in your PATH
+- Try restarting your terminal after installation
+
+**"Python version not supported"**
+- Ensure you have Python 3.13 or later installed
+- Check with: `python --version`
+
+**"Module not found" errors**
+- Run `uv sync` to install all dependencies
+- Make sure you're in the project directory
+
+**"Port already in use" or server won't start**
+- Another application may be using port 3000
+- Try stopping other development servers
+- Reflex will automatically find an available port
+
+**Browser shows blank page or connection refused**
+- Make sure the Reflex server is running (`reflex run`)
+- Check the terminal for any error messages
+- Try refreshing the browser or clearing cache
+- Ensure your firewall isn't blocking the connection
+
+### Getting Help
+
+If you encounter issues:
+
+1. Check that all prerequisites are installed
+2. Verify you're in the correct directory
+3. Try running `task setup` to reset the environment
+4. Check the project's issue tracker for known problems
+
+Ready to begin your logic programming journey? Let's [explore the gameplay](gameplay.qmd)!

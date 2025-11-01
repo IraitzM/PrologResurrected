@@ -1,0 +1,183 @@
+---
+title: "Gameplay Guide"
+---
+
+## Game Overview
+
+Logic Quest combines education with adventure in a retro cyberpunk setting. You'll progress through different memory banks of the LOGIC-1 AI system, each teaching core Prolog concepts through interactive puzzles.
+
+## Game Structure
+
+### Tutorial Mode: Hello World Prolog
+
+Perfect for beginners, the tutorial covers:
+
+1. **Introduction**: What is Prolog and logic programming?
+2. **Facts**: Creating statements of truth
+3. **Fact Creation**: Hands-on practice writing your first fact
+4. **Queries**: Asking questions with Prolog syntax
+5. **Variables**: Using variables to find multiple solutions
+6. **Completion**: Summary and next steps
+
+### Main Adventure: Memory Bank Restoration
+
+The full game consists of 5 levels, each focusing on a key Prolog concept:
+
+- **Level 1 - Facts Database**: Restore basic knowledge
+- **Level 2 - Inference Engine**: Repair logical rules
+- **Level 3 - Pattern Matching**: Fix unification systems
+- **Level 4 - Search Algorithms**: Restore backtracking
+- **Level 5 - Recursive Core**: Master recursive problem solving
+
+## Interface Guide
+
+### Web-Based Terminal Interface
+
+Logic Quest runs in your web browser with an authentic retro terminal experience:
+
+- **Welcome Screen**: Cyberpunk-styled main menu with ASCII art
+- **Interactive Buttons**: Click to navigate between game modes
+- **Full-Height Terminal Display**: Optimized layout that uses the entire browser viewport with fixed header and input areas
+- **Enhanced Terminal Output**: Multi-color terminal output with proper color coding, automatic scrolling, and robust error handling
+- **Terminal Window**: Type commands and see responses in real-time with responsive height adjustment
+- **Educational Content Boxes**: Centered explanation boxes with retro styling for displaying learning materials and concept explanations
+- **Defensive Programming**: Safe array bounds checking ensures stable terminal rendering without errors
+- **Responsive Design**: Works on desktop and mobile browsers with dynamic layout calculations
+- **Optimized Performance**: Lazy-loaded game components for smooth interaction
+- **Real-time State Management**: Instant updates without page refreshes
+
+### Terminal Commands
+
+Once in the game terminal, use these commands:
+
+```
+LOGIC-1 > help              # Show available commands
+LOGIC-1 > next              # Continue tutorial or story
+LOGIC-1 > menu              # Return to main menu
+LOGIC-1 > status            # Check progress and stats
+LOGIC-1 > hint              # Get a hint for current puzzle
+```
+
+### Navigation
+
+- **Main Menu**: Click buttons to start tutorial or adventure
+- **Terminal Input**: Type commands and press Enter
+- **Browser Controls**: Use browser back/forward if needed
+- **Responsive Layout**: Interface adapts to your screen size
+
+### Input Validation
+
+The game provides real-time feedback on your Prolog syntax with color-coded messages:
+
+- ✅ **Valid syntax**: Green confirmation with parsed components
+- ❌ **Syntax errors**: Red error messages with specific hints
+- 💡 **Helpful suggestions**: Yellow encouraging messages to keep you motivated
+- 🔵 **System messages**: Cyan text for commands and system responses
+- ⚪ **General text**: White text for neutral information
+
+### Example Interactions
+
+**Creating a fact:**
+```prolog
+LOGIC-1 > likes(alice, chocolate).
+✅ Valid fact! Predicate: likes, Arguments: [alice, chocolate]
+```
+
+**Writing a query:**
+```prolog
+LOGIC-1 > ?- likes(alice, X).
+✅ Valid query! This will find what Alice likes.
+```
+
+**Handling errors:**
+```prolog
+LOGIC-1 > likes(alice, chocolate)
+❌ Missing period at the end.
+💡 All Prolog facts must end with a period (.).
+```
+
+## Progression System
+
+### Scoring
+
+Your performance is tracked across multiple dimensions:
+
+- **Puzzle Score**: Based on attempts and hints used
+- **Speed Bonus**: Faster completion earns extra points
+- **Accuracy Rating**: Fewer mistakes improve your rating
+- **Concept Mastery**: Track which Prolog concepts you've learned
+
+### Progress Tracking
+
+The game maintains detailed statistics:
+
+- Facts and queries you've created
+- Mistakes made and lessons learned
+- Time spent on each concept
+- Overall completion percentage
+
+### Difficulty Scaling
+
+Puzzles adapt to your skill level:
+
+- **Beginner**: Step-by-step guidance with detailed hints
+- **Intermediate**: Less hand-holding, more complex scenarios
+- **Advanced**: Multi-step problems requiring deeper understanding
+- **Expert**: Open-ended challenges testing mastery
+
+## Learning Features
+
+### Interactive Validation
+
+Every input is validated with educational feedback:
+
+- **Syntax checking**: Immediate feedback on Prolog grammar
+- **Semantic analysis**: Verify logical correctness
+- **Helpful hints**: Specific suggestions for common mistakes
+- **Encouraging messages**: Supportive feedback to maintain motivation
+
+### Contextual Help
+
+Get assistance tailored to your current situation:
+
+- **Concept explanations**: Clear descriptions of Prolog features
+- **Example solutions**: See correct syntax in action
+- **Progressive hints**: Start gentle, get more specific if needed
+- **Error analysis**: Understand why something doesn't work
+
+### Practice Exercises
+
+Reinforce learning with hands-on practice:
+
+- **Guided exercises**: Step-by-step practice with immediate feedback
+- **Free exploration**: Experiment with concepts in a safe environment
+- **Challenge problems**: Test your understanding with complex scenarios
+- **Review sessions**: Revisit concepts you've learned
+
+## Tips for Success
+
+### For Beginners
+
+1. **Start with the tutorial**: Don't skip the Hello World introduction
+2. **Read error messages carefully**: They contain valuable learning hints
+3. **Experiment freely**: The system is forgiving and educational
+4. **Use hints when stuck**: They're designed to teach, not just solve
+5. **Take your time**: Understanding is more important than speed
+
+### For Experienced Programmers
+
+1. **Embrace the logic paradigm**: Prolog thinks differently than imperative languages
+2. **Focus on declarative thinking**: Describe what you want, not how to get it
+3. **Practice pattern matching**: It's fundamental to Prolog's power
+4. **Understand backtracking**: Learn how Prolog explores solution spaces
+5. **Master recursion**: It's the key to solving complex logical problems
+
+### General Strategy
+
+- **Read the story**: Context helps understand the technical concepts
+- **Practice regularly**: Consistent engagement builds understanding
+- **Don't rush**: Take time to understand each concept thoroughly
+- **Ask for hints**: They're educational tools, not cheating
+- **Review your progress**: Use the stats to identify areas for improvement
+
+Ready to dive deeper into the concepts? Learn about the [Prolog fundamentals](concepts.qmd) taught in Logic Quest!
