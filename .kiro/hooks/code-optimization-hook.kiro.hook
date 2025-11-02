@@ -1,10 +1,10 @@
 {
   "enabled": false,
   "name": "Code Optimization Hook",
-  "description": "Monitors code changes and triggers optimization to remove unused files, folders, and code elements based on test coverage analysis.",
+  "description": "Check for redundant pieces in the code to propose changes be it function removal or entire file removal if it is not part of the tests or working pieces of the app. Tr to mak it so that it complies with the structure proposed by the steering documents but also passes all the tests including e2e tests.",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       "**/*.py",
       "**/*.md",

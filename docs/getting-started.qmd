@@ -96,10 +96,11 @@ When you first start Logic Quest in your web browser, you'll see:
 
 For beginners, we recommend starting with the **Hello World Tutorial**:
 
-- Learn basic Prolog syntax step-by-step
-- Practice creating facts and writing queries
-- Get comfortable with the terminal interface
-- Build confidence before tackling advanced concepts
+- Learn basic Prolog syntax step-by-step with comprehensive error handling
+- Practice creating facts and writing queries with progressive hints
+- Experience the intelligent error detection and recovery mechanisms
+- Get comfortable with the terminal interface and supportive learning environment
+- Build confidence with encouraging feedback before tackling advanced concepts
 
 ### Navigation
 

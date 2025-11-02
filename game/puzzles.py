@@ -200,7 +200,21 @@ class PuzzleManager:
             "total_attempts": 0,
             "total_hints_used": 0,
             "concepts_mastered": set(),
+            "hello_world_completed": False,  # Track hello world tutorial completion
         }
+        
+        # Register the Hello World tutorial as level 0
+        self._register_hello_world_puzzle()
+
+    def _register_hello_world_puzzle(self):
+        """Register the Hello World Prolog tutorial puzzle."""
+        try:
+            from game.hello_world_puzzle import HelloWorldPuzzle
+            hello_world = HelloWorldPuzzle()
+            self.available_puzzles[hello_world.puzzle_id] = hello_world
+        except ImportError:
+            # HelloWorldPuzzle not available, skip registration
+            pass
 
     def register_puzzle(self, puzzle: BasePuzzle):
         """
@@ -336,7 +350,24 @@ class PuzzleManager:
                 else 0
             ),
             "concepts_mastered": list(self.player_stats["concepts_mastered"]),
+            "hello_world_completed": self.player_stats["hello_world_completed"],
         }
+
+    def is_hello_world_completed(self) -> bool:
+        """Check if the Hello World tutorial has been completed."""
+        return self.player_stats.get("hello_world_completed", False)
+
+    def get_hello_world_puzzle(self) -> Optional[BasePuzzle]:
+        """Get the Hello World tutorial puzzle."""
+        return self.get_puzzle("hello_world_prolog")
+
+    def should_recommend_hello_world(self) -> bool:
+        """Check if Hello World tutorial should be recommended to the player."""
+        # Recommend if not completed and no other puzzles have been completed
+        return (
+            not self.is_hello_world_completed() 
+            and len(self.completed_puzzles) == 0
+        )
 
     def _complete_puzzle(self, puzzle: BasePuzzle, result: PuzzleResult):
         """
@@ -354,9 +385,17 @@ class PuzzleManager:
         self.player_stats["total_attempts"] += result.attempts
         self.player_stats["total_hints_used"] += result.hints_used
 
-        # For now, just mark general completion
-        # This would be expanded to map puzzles to concepts based on type
-        self.player_stats["concepts_mastered"].add("basic_prolog")
+        # Track hello world tutorial completion
+        if puzzle.puzzle_id == "hello_world_prolog":
+            self.player_stats["hello_world_completed"] = True
+            self.player_stats["concepts_mastered"].add("prolog_basics")
+            self.player_stats["concepts_mastered"].add("facts")
+            self.player_stats["concepts_mastered"].add("queries")
+            self.player_stats["concepts_mastered"].add("variables")
+        else:
+            # For now, just mark general completion
+            # This would be expanded to map puzzles to concepts based on type
+            self.player_stats["concepts_mastered"].add("basic_prolog")
 
 
 # Example puzzle implementation

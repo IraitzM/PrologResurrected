@@ -65,15 +65,36 @@ LOGIC-1 > hint              # Get a hint for current puzzle
 - **Browser Controls**: Use browser back/forward if needed
 - **Responsive Layout**: Interface adapts to your screen size
 
-### Input Validation
+### Advanced Error Handling & Validation
 
-The game provides real-time feedback on your Prolog syntax with color-coded messages:
+The game provides comprehensive error handling with progressive learning support:
 
+#### Progressive Hint System
+- **5 Escalating Levels**: From gentle encouragement to complete solutions
+- **Intelligent Error Detection**: Automatic categorization of common Prolog syntax mistakes
+- **Contextual Guidance**: Hints tailored to specific error types and exercises
+- **Attempt-Based Progression**: More specific help as users make more attempts
+
+#### Specific Error Messages
+- **Missing Period Errors**: Clear guidance when facts/queries lack required periods
+- **Capitalization Issues**: Help with predicate and variable capitalization rules
+- **Parentheses Problems**: Detection and guidance for missing or mismatched parentheses
+- **Query Syntax**: Specific help with `?-` prefix and query formatting
+- **Pattern Recognition**: Comprehensive detection of malformed Prolog syntax
+
+#### Recovery Mechanisms for Stuck Users
+- **Multiple Help Options**: Continue, get hints, see examples, show answers, skip exercises
+- **Alternative Explanations**: Different ways to understand the same concept
+- **Adaptive Support**: More recovery options become available after multiple attempts
+- **Concept Review**: Quick refreshers on key Prolog concepts when needed
+
+#### Color-Coded Feedback
 - ✅ **Valid syntax**: Green confirmation with parsed components
-- ❌ **Syntax errors**: Red error messages with specific hints
-- 💡 **Helpful suggestions**: Yellow encouraging messages to keep you motivated
+- ❌ **Syntax errors**: Red error messages with specific, encouraging hints
+- 💡 **Progressive hints**: Yellow encouraging messages with escalating specificity
 - 🔵 **System messages**: Cyan text for commands and system responses
 - ⚪ **General text**: White text for neutral information
+- 🎯 **Recovery options**: Highlighted help options for stuck users
 
 ### Example Interactions
 
@@ -89,11 +110,36 @@ LOGIC-1 > ?- likes(alice, X).
 ✅ Valid query! This will find what Alice likes.
 ```
 
-**Handling errors:**
+**Progressive error handling:**
 ```prolog
+# First attempt - gentle hint
+LOGIC-1 > likes(alice, chocolate)
+❌ Missing period at the end.
+💡 Don't forget the period (.) at the end!
+
+# Second attempt - more specific
 LOGIC-1 > likes(alice, chocolate)
 ❌ Missing period at the end.
 💡 All Prolog facts must end with a period (.).
+🔍 Remember the pattern: predicate(argument1, argument2).
+
+# Third attempt - detailed guidance
+LOGIC-1 > likes(alice, chocolate)
+❌ Missing period at the end.
+💡 The period tells Prolog that your statement is complete.
+📝 Let's check your syntax step by step:
+   1. Does it start with a lowercase predicate? ✅
+   2. Are the arguments in parentheses? ✅
+   3. Are arguments separated by commas? ✅
+   4. Does it end with a period (.)? ❌
+
+# Recovery options after multiple attempts
+🤔 You've made several attempts. What would you like to do?
+1. Keep trying (I can do this!)
+2. Give me a more specific hint
+3. Show me a similar example
+4. Show me the correct answer
+5. Skip this exercise for now
 ```
 
 ## Progression System
@@ -140,10 +186,12 @@ Every input is validated with educational feedback:
 
 Get assistance tailored to your current situation:
 
-- **Concept explanations**: Clear descriptions of Prolog features
-- **Example solutions**: See correct syntax in action
-- **Progressive hints**: Start gentle, get more specific if needed
-- **Error analysis**: Understand why something doesn't work
+- **Concept explanations**: Clear descriptions of Prolog features with alternative explanations
+- **Example solutions**: See correct syntax in action with step-by-step breakdowns
+- **Progressive hints**: 5 escalating levels from gentle encouragement to complete solutions
+- **Error analysis**: Intelligent categorization and specific guidance for common mistakes
+- **Recovery mechanisms**: Multiple help options when you're stuck, including concept reviews
+- **Encouraging support**: Positive, motivational messaging throughout the learning process
 
 ### Practice Exercises
 

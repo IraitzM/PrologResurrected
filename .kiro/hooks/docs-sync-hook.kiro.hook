@@ -1,10 +1,10 @@
 {
-  "enabled": true,
+  "enabled": false,
   "name": "Documentation Sync",
-  "description": "Monitors all Python source files and project configuration files for changes, then automatically updates the README.md and any documentation to reflect the current state of the codebase",
+  "description": "Analyzes all Python source files and project configuration files and updates any documentation file related to the topic or changes involved to reflect the current state of the codebase so that examples and guidelines are aligned.",
   "version": "1",
   "when": {
-    "type": "fileEdited",
+    "type": "userTriggered",
     "patterns": [
       "*.py",
       "game/*.py",
