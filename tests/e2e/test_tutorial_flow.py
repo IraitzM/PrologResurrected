@@ -7,8 +7,8 @@ These tests focus on the core tutorial logic without requiring a full server.
 
 import pytest
 from unittest.mock import Mock, MagicMock
-from game.hello_world_puzzle import HelloWorldPuzzle
-from game.tutorial_content import TutorialStep
+from prologresurrected.game.hello_world_puzzle import HelloWorldPuzzle
+from prologresurrected.game.tutorial_content import TutorialStep
 
 
 class MockPage:
@@ -194,7 +194,7 @@ class TestTutorialEducationalContent:
         assert len(examples) > 0
         
         # Examples should be valid Prolog facts
-        from game.validation import PrologValidator
+        from prologresurrected.game.validation import PrologValidator
         for example in examples:
             result = PrologValidator.validate_fact(example)
             assert result.is_valid, f"Example '{example}' should be valid"

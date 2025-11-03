@@ -6,9 +6,9 @@ to recovery mechanisms, ensuring all components work together seamlessly.
 """
 
 import pytest
-from game.hello_world_puzzle import HelloWorldPuzzle
-from game.validation import ValidationResult, PrologValidator
-from game.error_handling import (
+from prologresurrected.game.hello_world_puzzle import HelloWorldPuzzle
+from prologresurrected.game.validation import ValidationResult, PrologValidator
+from prologresurrected.game.error_handling import (
     ProgressiveHintSystem, RecoveryMechanisms, ErrorContext, 
     ErrorCategory, HintLevel
 )

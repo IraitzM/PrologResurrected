@@ -6,10 +6,10 @@ including initialization, step management, and validation logic.
 """
 
 import pytest
-from game.hello_world_puzzle import HelloWorldPuzzle
-from game.tutorial_content import TutorialStep
-from game.puzzles import PuzzleDifficulty
-from game.validation import ValidationResult
+from prologresurrected.game.hello_world_puzzle import HelloWorldPuzzle
+from prologresurrected.game.tutorial_content import TutorialStep
+from prologresurrected.game.puzzles import PuzzleDifficulty
+from prologresurrected.game.validation import ValidationResult
 
 
 class TestHelloWorldPuzzle:
@@ -369,7 +369,7 @@ class TestHelloWorldPuzzle:
         puzzle = HelloWorldPuzzle()
         
         # Create mock validation result for testing
-        from game.validation import ValidationResult
+        from prologresurrected.game.validation import ValidationResult
         
         # Test different error scenarios
         missing_period_error = ValidationResult(

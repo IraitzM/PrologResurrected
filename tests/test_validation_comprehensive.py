@@ -8,13 +8,13 @@ and tutorial content parsing and navigation functionality.
 import pytest
 import re
 from unittest.mock import patch
-from game.validation import (
+from prologresurrected.game.validation import (
     PrologValidator,
     ValidationResult,
     get_encouraging_message,
     COMMON_ERRORS,
 )
-from game.tutorial_content import (
+from prologresurrected.game.tutorial_content import (
     TutorialProgress,
     TutorialNavigator,
     TutorialSession,

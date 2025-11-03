@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
-from game.validation import ValidationResult, PrologValidator
+from .validation import ValidationResult, PrologValidator
 
 
 class PuzzleDifficulty(Enum):
@@ -209,7 +209,7 @@ class PuzzleManager:
     def _register_hello_world_puzzle(self):
         """Register the Hello World Prolog tutorial puzzle."""
         try:
-            from game.hello_world_puzzle import HelloWorldPuzzle
+            from .hello_world_puzzle import HelloWorldPuzzle
             hello_world = HelloWorldPuzzle()
             self.available_puzzles[hello_world.puzzle_id] = hello_world
         except ImportError:

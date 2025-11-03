@@ -6,8 +6,8 @@ to ensure proper tutorial completion tracking and transitions.
 """
 
 import pytest
-from game.puzzles import PuzzleManager
-from game.story import StoryEngine
+from prologresurrected.game.puzzles import PuzzleManager
+from prologresurrected.game.story import StoryEngine
 
 
 class TestHelloWorldGameIntegration:
@@ -49,7 +49,7 @@ class TestHelloWorldGameIntegration:
         hello_world.completed = True
         
         # Submit a successful result to trigger completion tracking
-        from game.puzzles import PuzzleResult
+        from prologresurrected.game.puzzles import PuzzleResult
         result = PuzzleResult(
             success=True,
             score=100,
@@ -143,7 +143,7 @@ class TestHelloWorldGameIntegration:
     def test_integration_with_existing_puzzle_system(self):
         """Test that hello world integrates properly with existing puzzle system."""
         # Register additional puzzles
-        from game.puzzles import SimpleFactPuzzle
+        from prologresurrected.game.puzzles import SimpleFactPuzzle
         additional_puzzle = SimpleFactPuzzle()
         self.puzzle_manager.register_puzzle(additional_puzzle)
         

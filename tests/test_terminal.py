@@ -6,7 +6,7 @@ styling, and terminal operations for the Logic Quest retro interface.
 """
 
 from unittest.mock import Mock, patch
-from game.terminal import Terminal, terminal_component, CYBERDYNE_LOGO, LOGIC_CIRCUIT
+from prologresurrected.game.terminal import Terminal, terminal_component, CYBERDYNE_LOGO, LOGIC_CIRCUIT
 
 
 class TestTerminal:

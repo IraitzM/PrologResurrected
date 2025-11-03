@@ -5,7 +5,7 @@ Tests for the puzzle management system, including base puzzle classes,
 puzzle manager, and example puzzle implementations.
 """
 
-from game.puzzles import (
+from prologresurrected.game.puzzles import (
     PuzzleDifficulty,
     PuzzleType,
     PuzzleResult,
@@ -13,7 +13,7 @@ from game.puzzles import (
     PuzzleManager,
     SimpleFactPuzzle,
 )
-from game.validation import ValidationResult
+from prologresurrected.game.validation import ValidationResult
 
 
 class TestPuzzleDifficulty:

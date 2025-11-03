@@ -6,10 +6,10 @@ of Prolog programming through an engaging, story-driven experience.
 """
 
 from typing import Dict, Any, Optional
-from game.puzzles import BasePuzzle, PuzzleDifficulty
-from game.tutorial_content import TutorialSession, TutorialStep
-from game.validation import ValidationResult, PrologValidator
-from game.error_handling import (
+from .puzzles import BasePuzzle, PuzzleDifficulty
+from .tutorial_content import TutorialSession, TutorialStep
+from .validation import ValidationResult, PrologValidator
+from .error_handling import (
     ProgressiveHintSystem, RecoveryMechanisms, ErrorContext, 
     ErrorCategory, HintLevel, create_comprehensive_error_handler
 )

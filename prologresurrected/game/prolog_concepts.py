@@ -6,8 +6,8 @@ Contains specific puzzles for facts, rules, unification, backtracking, and recur
 """
 
 from typing import Dict, Any
-from game.puzzles import BasePuzzle, PuzzleDifficulty
-from game.validation import ValidationResult, PrologValidator
+from .puzzles import BasePuzzle, PuzzleDifficulty
+from .validation import ValidationResult, PrologValidator
 
 
 class FactCreationPuzzle(BasePuzzle):

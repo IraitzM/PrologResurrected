@@ -5,7 +5,7 @@ Tests for the story engine module, including narrative progression,
 level management, and story content delivery for Logic Quest.
 """
 
-from game.story import StoryEngine, GameLevel, StorySegment
+from prologresurrected.game.story import StoryEngine, GameLevel, StorySegment
 
 
 class TestGameLevel:

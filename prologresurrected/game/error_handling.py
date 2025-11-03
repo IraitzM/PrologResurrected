@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 from enum import Enum
 
-from game.validation import ValidationResult
+from .validation import ValidationResult
 
 
 class HintLevel(Enum):

@@ -6,8 +6,8 @@ Tests the complete tutorial flow and terminal interaction.
 
 import pytest
 from unittest.mock import Mock, MagicMock
-from game.hello_world_puzzle import HelloWorldPuzzle
-from game.tutorial_content import TutorialStep
+from prologresurrected.game.hello_world_puzzle import HelloWorldPuzzle
+from prologresurrected.game.tutorial_content import TutorialStep
 
 
 class MockTerminal:
@@ -63,7 +63,7 @@ class TestHelloWorldIntegration:
         terminal = MockTerminal()
         
         # Mock a step method in the step_methods dictionary to raise an exception
-        from game.tutorial_content import TutorialStep
+        from prologresurrected.game.tutorial_content import TutorialStep
         original_method = puzzle.step_methods[TutorialStep.INTRODUCTION]
         puzzle.step_methods[TutorialStep.INTRODUCTION] = Mock(side_effect=Exception("Test exception"))
         

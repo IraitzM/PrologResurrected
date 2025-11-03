@@ -52,7 +52,7 @@ Once in the game terminal, use these commands:
 
 ```
 LOGIC-1 > help              # Show available commands
-LOGIC-1 > next              # Continue tutorial or story
+LOGIC-1 > hint              # Get guidance for current step
 LOGIC-1 > menu              # Return to main menu
 LOGIC-1 > status            # Check progress and stats
 LOGIC-1 > hint              # Get a hint for current puzzle

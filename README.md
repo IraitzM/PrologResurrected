@@ -61,9 +61,7 @@ python main.py
 
 The application will start a local web server (typically at http://localhost:3000) where you can access the retro terminal interface.
 
-**Note**: The application can be run either through `reflex run` (which uses the prologresurrected package) or `python main.py` (direct execution). Both entry points provide the same core functionality with robust error handling, but with different UI implementations:
-- **prologresurrected package**: Single-panel terminal interface with centered explanation boxes
-- **main.py**: Dual-panel interface with terminal on left and information panel on right
+**Note**: The application follows proper Reflex structure with the main app in the `prologresurrected` package. It can be run with either `reflex run` (recommended) or `python main.py`. The interface features a dual-panel layout with terminal on the left and information panel on the right, providing an optimal learning experience with interactive tutorial content.
 
 ### Quick Demo
 ```bash
@@ -126,8 +124,10 @@ uv run playwright test
 
 ## Project Structure
 ```
-├── prologresurrected/        # Main application package
-│   └── prologresurrected.py # Reflex app entry point with web interface
+├── main.py                   # Simple entry point that imports from prologresurrected package
+├── prologresurrected/        # Main Reflex application package
+│   ├── __init__.py          # Package initialization
+│   └── prologresurrected.py # Main Reflex app with interactive tutorial system
 ├── game/                     # Core game logic modules
 │   ├── __init__.py
 │   ├── validation.py         # Prolog syntax validation utilities
@@ -158,7 +158,6 @@ uv run playwright test
 │   └── specs/
 │       └── hello-world-prolog/  # Tutorial specification documents
 ├── docs/                     # Documentation (Quarto-based)
-├── main.py                   # Alternative entry point (same implementation as prologresurrected)
 ├── rxconfig.py               # Reflex configuration file
 ├── demo.py                   # Quick demo of validation features
 ├── pyproject.toml            # Project configuration with Reflex dependencies
@@ -577,7 +576,7 @@ print(message)  # Random supportive message
 - **Cross-Platform**: Runs on any device with a modern web browser
 
 ## Technology Stack
-- **Framework**: Reflex (Python web framework) - configured as "prologresurrected" app
+- **Framework**: Reflex (Python web framework)
 - **Language**: Python 3.13+
 - **Package Manager**: uv for fast dependency management
 - **Testing**: pytest for unit tests, Playwright for end-to-end testing
@@ -604,7 +603,7 @@ reflex export
 reflex deploy
 ```
 
-The application is configured as "prologresurrected" in `rxconfig.py` and uses SQLite for development data storage. The web interface provides cross-platform access through any modern web browser.
+The application uses SQLite for development data storage and provides cross-platform access through any modern web browser.
 
 ### State Management Architecture
 
@@ -696,6 +695,17 @@ task validate
 - Understanding how to ask questions using Prolog queries
 - Using variables in queries to find multiple solutions
 - Building confidence for advanced Prolog concepts
+
+### Interactive Tutorial Requirements
+**Important**: The tutorial system requires active participation and correct Prolog syntax:
+
+- ❌ **Cannot progress with "next" or "continue" commands**
+- ✅ **Must type correct Prolog commands to advance**
+- ✅ **Each exercise requires specific answers (facts, queries, component identification)**
+- ✅ **Progressive hint system provides guidance when stuck**
+- ✅ **Comprehensive error messages help fix syntax mistakes**
+
+The tutorial is designed to ensure hands-on learning rather than passive reading. You'll write actual Prolog code and receive immediate feedback on your syntax and understanding.
 
 ### Advanced Game Objectives
 - **Progressive Skill Building**: Structured learning path from beginner to expert level puzzles

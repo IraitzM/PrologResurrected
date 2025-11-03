@@ -3,7 +3,7 @@
 Comprehensive test suite for Prolog validation utilities.
 """
 
-from game.validation import PrologValidator, ValidationResult, get_encouraging_message
+from prologresurrected.game.validation import PrologValidator, ValidationResult, get_encouraging_message
 
 
 def test_basic_validation():

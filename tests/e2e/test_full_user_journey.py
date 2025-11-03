@@ -150,7 +150,7 @@ class TestCompleteUserJourney:
         page.wait_for_timeout(500)
         
         # 3. User gets helpful feedback
-        expect(page.locator("text=Type 'next' to continue or 'menu' to return.")).to_be_visible()
+        expect(page.locator("text=Type 'begin', 'start', or 'ready' to show you're engaged.")).to_be_visible()
         
         # 4. User recovers and continues
         terminal_input.fill("next")

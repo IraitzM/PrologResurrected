@@ -6,11 +6,11 @@ recovery mechanisms, and integration with the tutorial flow.
 """
 
 import pytest
-from game.error_handling import (
+from prologresurrected.game.error_handling import (
     ProgressiveHintSystem, RecoveryMechanisms, ErrorContext, 
     ErrorCategory, HintLevel, create_comprehensive_error_handler
 )
-from game.validation import ValidationResult, PrologValidator
+from prologresurrected.game.validation import ValidationResult, PrologValidator
 
 
 class TestProgressiveHintSystem:

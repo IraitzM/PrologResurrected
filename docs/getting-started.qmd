@@ -42,7 +42,7 @@ pip install uv
 
    This will start a local web server (typically at http://localhost:3000) where you can access the game through your browser.
 
-   **Note**: The application is configured as "prologresurrected" in the Reflex configuration, with optimized state management for smooth web performance. Both entry points provide the same functionality.
+   **Note**: The application uses optimized state management for smooth web performance and provides an interactive learning experience through the web interface.
 
 ## Development Setup
 
