@@ -65,12 +65,6 @@ tasks:
       - uv build
       - echo "✅ Package built successfully!"
 
-  dev:
-    desc: Start development server
-    cmds:
-      - echo "🚀 Starting development server..."
-      - uv run reflex run
-
   run:
     desc: Run the application
     cmds:
@@ -142,3 +136,8 @@ tasks:
     deps: [setup, validate, build]
     cmds:
       - echo "🎯 CI pipeline completed successfully!"
+
+  deploy:
+    desc: Reflex Cloud deployment
+    cmds:
+      - uv run reflex deploy --project 383449a8-c971-4003-876f-07abafa1dcb5

@@ -24,7 +24,7 @@
             ├── terminal.py   # Terminal interface and styling
             ├── story.py      # Narrative engine and story progression
             ├── puzzles.py    # Puzzle management and base classes
-            ├── prolog_concepts.py # Individual puzzle implementations
+            ├── hello_world_puzzle.py # Hello World tutorial puzzle (main puzzle)
             ├── hello_world_puzzle.py # Hello World tutorial puzzle
             ├── tutorial_content.py # Tutorial text and content
             ├── validation.py # Input validation utilities
@@ -39,14 +39,14 @@
 - **Terminal Layer**: Terminal utilities and styling helpers (`game/terminal.py`)
 - **Story Layer**: Narrative flow, level progression, and story text (`game/story.py`)
 - **Puzzle Layer**: Game logic, puzzle management, and base classes (`game/puzzles.py`)
-- **Concept Layer**: Individual puzzle implementations (`game/prolog_concepts.py`, `game/hello_world_puzzle.py`)
+- **Concept Layer**: Tutorial puzzle implementation (`game/hello_world_puzzle.py`)
 - **Validation Layer**: Input validation and error handling (`game/validation.py`, `game/error_handling.py`)
 - **Content Layer**: Tutorial content and text management (`game/tutorial_content.py`)
 
 ### Class Hierarchy
 - `State`: Main Reflex state class in `prologresurrected.py` managing game state
 - `BasePuzzle`: Abstract base class for all puzzles in `puzzles.py`
-- Individual puzzle classes inherit from `BasePuzzle` (in `prolog_concepts.py`, `hello_world_puzzle.py`)
+- Individual puzzle classes inherit from `BasePuzzle` (in `hello_world_puzzle.py`)
 - `Terminal`: Handles terminal operations and styling utilities in `terminal.py`
 - `StoryEngine`: Manages narrative flow and story progression in `story.py`
 - `PuzzleManager`: Coordinates puzzle selection and execution in `puzzles.py`

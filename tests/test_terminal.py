@@ -176,7 +176,7 @@ class TestTerminal:
 class TestTerminalComponent:
     """Test cases for the terminal component function."""
 
-    @patch("game.terminal.rx")
+    @patch("prologresurrected.game.terminal.rx")
     def test_terminal_component_structure(self, mock_rx):
         """Test that terminal component has correct structure."""
         # Mock the rx components
@@ -203,7 +203,7 @@ class TestTerminalComponent:
         # Verify that rx.input was called (for user input)
         mock_rx.input.assert_called()
 
-    @patch("game.terminal.rx")
+    @patch("prologresurrected.game.terminal.rx")
     def test_terminal_component_styling(self, mock_rx):
         """Test that terminal component applies correct cyberpunk styling."""
         mock_rx.vstack.return_value = Mock()

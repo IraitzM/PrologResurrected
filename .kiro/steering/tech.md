@@ -118,7 +118,7 @@ reflex deploy
     - `terminal.py`: Terminal interface and styling utilities
     - `story.py`: Narrative engine and story progression
     - `puzzles.py`: Puzzle management system and base classes
-    - `prolog_concepts.py`: Individual puzzle implementations
+    - `hello_world_puzzle.py`: Hello World tutorial puzzle (main puzzle implementation)
     - `hello_world_puzzle.py`: Hello World tutorial puzzle
     - `tutorial_content.py`: Tutorial text and content management
     - `validation.py`: Input validation utilities
