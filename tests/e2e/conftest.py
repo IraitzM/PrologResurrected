@@ -14,9 +14,9 @@ from playwright.sync_api import Playwright, Browser, BrowserContext, Page
 @pytest.fixture(scope="session")
 def reflex_server():
     """Start the Reflex development server for testing."""
-    # Start the Reflex server
+    # Start the Reflex server with correct options
     process = subprocess.Popen(
-        ["uv", "run", "reflex", "run", "--port", "3001"],
+        ["uv", "run", "reflex", "run", "--frontend-port", "3001", "--backend-port", "8001"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )

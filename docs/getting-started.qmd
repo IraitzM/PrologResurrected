@@ -42,7 +42,7 @@ pip install uv
 
    This will start a local web server (typically at http://localhost:3000) where you can access the game through your browser.
 
-   **Note**: The application is configured as "prologresurrected" in the Reflex configuration, with optimized state management for smooth web performance. Both entry points provide the same functionality.
+   **Note**: The application uses optimized state management for smooth web performance and provides an interactive learning experience through the web interface.
 
 ## Development Setup
 
@@ -96,10 +96,11 @@ When you first start Logic Quest in your web browser, you'll see:
 
 For beginners, we recommend starting with the **Hello World Tutorial**:
 
-- Learn basic Prolog syntax step-by-step
-- Practice creating facts and writing queries
-- Get comfortable with the terminal interface
-- Build confidence before tackling advanced concepts
+- Learn basic Prolog syntax step-by-step with comprehensive error handling
+- Practice creating facts and writing queries with progressive hints
+- Experience the intelligent error detection and recovery mechanisms
+- Get comfortable with the terminal interface and supportive learning environment
+- Build confidence with encouraging feedback before tackling advanced concepts
 
 ### Navigation
 

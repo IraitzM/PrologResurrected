@@ -5,7 +5,7 @@ Tests for the puzzle management system, including base puzzle classes,
 puzzle manager, and example puzzle implementations.
 """
 
-from game.puzzles import (
+from prologresurrected.game.puzzles import (
     PuzzleDifficulty,
     PuzzleType,
     PuzzleResult,
@@ -13,7 +13,7 @@ from game.puzzles import (
     PuzzleManager,
     SimpleFactPuzzle,
 )
-from game.validation import ValidationResult
+from prologresurrected.game.validation import ValidationResult
 
 
 class TestPuzzleDifficulty:
@@ -266,13 +266,16 @@ class TestPuzzleManager:
 
     def test_manager_initialization(self):
         """Test that puzzle manager initializes correctly."""
-        assert len(self.manager.available_puzzles) == 0
+        # HelloWorldPuzzle is automatically registered, so we expect 1 puzzle
+        assert len(self.manager.available_puzzles) == 1
+        assert "hello_world_prolog" in self.manager.available_puzzles
         assert len(self.manager.completed_puzzles) == 0
         assert self.manager.current_puzzle is None
 
         stats = self.manager.player_stats
         assert stats["total_score"] == 0
         assert stats["puzzles_completed"] == 0
+        assert stats["hello_world_completed"] == False
         assert stats["total_attempts"] == 0
         assert stats["total_hints_used"] == 0
         assert isinstance(stats["concepts_mastered"], set)
@@ -282,7 +285,9 @@ class TestPuzzleManager:
         self.manager.register_puzzle(self.puzzle1)
         self.manager.register_puzzle(self.puzzle2)
 
-        assert len(self.manager.available_puzzles) == 2
+        # HelloWorldPuzzle is automatically registered, so we expect 3 total
+        assert len(self.manager.available_puzzles) == 3
+        assert "hello_world_prolog" in self.manager.available_puzzles
         assert "puzzle1" in self.manager.available_puzzles
         assert "puzzle2" in self.manager.available_puzzles
 
@@ -304,8 +309,11 @@ class TestPuzzleManager:
         beginner_puzzles = self.manager.get_puzzles_by_difficulty(
             PuzzleDifficulty.BEGINNER
         )
-        assert len(beginner_puzzles) == 1
-        assert beginner_puzzles[0] is self.puzzle1
+        # HelloWorldPuzzle is also BEGINNER, so we expect 2
+        assert len(beginner_puzzles) == 2
+        puzzle_ids = [p.puzzle_id for p in beginner_puzzles]
+        assert "hello_world_prolog" in puzzle_ids
+        assert "puzzle1" in puzzle_ids
 
         advanced_puzzles = self.manager.get_puzzles_by_difficulty(
             PuzzleDifficulty.ADVANCED
@@ -324,8 +332,9 @@ class TestPuzzleManager:
         self.manager.register_puzzle(self.puzzle1)  # BEGINNER
 
         # Should return the easiest uncompleted puzzle
+        # HelloWorldPuzzle is also BEGINNER and comes first alphabetically
         next_puzzle = self.manager.get_next_puzzle(current_level=1)
-        assert next_puzzle is self.puzzle1  # BEGINNER comes first
+        assert next_puzzle.puzzle_id == "hello_world_prolog"  # HelloWorld comes first
 
     def test_start_puzzle(self):
         """Test starting a specific puzzle."""
@@ -405,10 +414,12 @@ class TestPuzzleManager:
         summary = self.manager.get_progress_summary()
 
         assert summary["puzzles_completed"] == 1
-        assert summary["total_puzzles"] == 2
-        assert summary["completion_percentage"] == 50.0
+        # HelloWorldPuzzle is automatically registered, so total is 3
+        assert summary["total_puzzles"] == 3
+        assert abs(summary["completion_percentage"] - (100.0 / 3)) < 0.01  # 1/3 completed
         assert summary["total_score"] > 0
         assert summary["average_score"] > 0
+        assert "hello_world_completed" in summary
         assert isinstance(summary["concepts_mastered"], list)
 
     def test_statistics_tracking(self):
@@ -582,5 +593,6 @@ class TestPuzzleIntegration:
 
         # Check progress summary
         summary = manager.get_progress_summary()
-        assert summary["completion_percentage"] == 100.0  # Only one puzzle
+        # HelloWorldPuzzle is automatically registered, so completion is 50% (1 out of 2)
+        assert summary["completion_percentage"] == 50.0  # 1 out of 2 puzzles
         assert summary["average_score"] > 0

@@ -270,6 +270,77 @@ After mastering these concepts in Logic Quest:
 
 The concepts learned in Logic Quest provide a solid foundation for advanced logic programming and artificial intelligence applications. Each puzzle and challenge reinforces these fundamentals while building practical problem-solving skills.
 
-The concepts learned in Logic Quest are presented through an enhanced terminal interface with centered explanation boxes that provide clear, retro-styled educational content display. The terminal features robust error handling and defensive programming to ensure stable, reliable presentation of learning materials.
+The concepts learned in Logic Quest are presented through an enhanced terminal interface with comprehensive error handling and educational support:
+
+### Advanced Learning Support Features
+
+- **Progressive Hint System**: 5 escalating levels of help from gentle encouragement to complete solutions
+- **Intelligent Error Detection**: Automatic categorization of common Prolog syntax mistakes with specific guidance
+- **Recovery Mechanisms**: Multiple help options for stuck users including alternative explanations and concept reviews
+- **Encouraging Environment**: Positive, supportive messaging throughout the learning process
+- **Centered Explanation Boxes**: Clear, retro-styled educational content display with robust terminal rendering
+- **Defensive Programming**: Safe, stable presentation of learning materials with comprehensive error handling
+
+## Error Handling & Learning Support
+
+Logic Quest includes a comprehensive error handling system designed to support learners at every step:
+
+### Progressive Hint System
+
+The game provides 5 escalating levels of help based on your attempt count:
+
+1. **Gentle (Attempt 1)**: Brief, encouraging hints with general guidance
+   - "Don't forget the period (.) at the end!"
+   - Maintains motivation while providing basic direction
+
+2. **Specific (Attempt 2)**: More detailed hints with pattern examples
+   - "All Prolog facts must end with a period (.)."
+   - "Remember the pattern: predicate(argument1, argument2)."
+
+3. **Detailed (Attempt 3)**: Step-by-step checklists and debugging guidance
+   - Complete syntax checklist with visual indicators
+   - Systematic approach to identifying the specific issue
+
+4. **Explicit (Attempt 4)**: Very specific instructions with exact patterns
+   - "Type exactly what you have, but add a period (.) at the end."
+   - Clear, actionable guidance for immediate success
+
+5. **Show Answer (Attempt 5+)**: Complete solution with full explanation
+   - Complete correct answer with component breakdown
+   - Educational explanation of why the answer is correct
+
+### Common Error Detection
+
+The system automatically detects and provides specific guidance for:
+
+- **Missing Periods**: When facts or queries lack required periods
+- **Capitalization Issues**: Incorrect uppercase/lowercase in predicates and variables
+- **Parentheses Problems**: Missing or mismatched parentheses around arguments
+- **Query Syntax**: Missing `?-` prefix in Prolog queries
+- **Variable Formatting**: Lowercase variables that should be uppercase
+- **Malformed Syntax**: Various other syntax pattern issues
+
+### Recovery Mechanisms
+
+When you're stuck, the system offers multiple recovery options:
+
+- **Continue Trying**: Encouragement to keep attempting with additional hints
+- **Alternative Explanations**: Different ways to understand the same concept
+- **Similar Examples**: Related examples to clarify the pattern
+- **Complete Answer**: Full solution with educational breakdown
+- **Skip Exercise**: Option to move forward and return later
+- **Concept Review**: Quick refreshers on key Prolog concepts
+
+### Encouraging Learning Environment
+
+All error messages maintain a positive, supportive tone:
+
+- Uses encouraging phrases like "Great attempt!", "You're learning!", "Don't give up!"
+- Frames mistakes as natural parts of the learning process
+- Includes visual elements (emojis) to maintain engagement
+- Avoids discouraging language while providing clear guidance
+- Celebrates persistence and effort throughout the learning journey
+
+This comprehensive support system ensures that learners can progress confidently through Prolog concepts while receiving the help they need exactly when they need it.
 
 Ready to put these concepts into practice? [Start playing](getting-started.qmd) Logic Quest!

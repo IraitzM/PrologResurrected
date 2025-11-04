@@ -50,6 +50,7 @@ class StoryEngine:
             "score": 0,
             "concepts_learned": [],
             "story_flags": set(),
+            "hello_world_completed": False,
         }
 
     def get_intro_story(self) -> StorySegment:
@@ -280,6 +281,53 @@ class StoryEngine:
     def has_story_flag(self, flag: str) -> bool:
         """Check if a story flag is set."""
         return flag in self.player_progress["story_flags"]
+
+    def mark_hello_world_completed(self) -> None:
+        """Mark the Hello World tutorial as completed."""
+        self.player_progress["hello_world_completed"] = True
+        self.add_concept_learned("prolog_basics")
+        self.add_concept_learned("facts")
+        self.add_concept_learned("queries") 
+        self.add_concept_learned("variables")
+
+    def is_hello_world_completed(self) -> bool:
+        """Check if Hello World tutorial has been completed."""
+        return self.player_progress.get("hello_world_completed", False)
+
+    def get_hello_world_transition_story(self) -> StorySegment:
+        """Get story segment for transitioning from Hello World to main game."""
+        return StorySegment(
+            title="TUTORIAL COMPLETE - READY FOR THE REAL CHALLENGE",
+            content=[
+                "🎉 Excellent work, programmer! You've mastered the basics of Prolog.",
+                "",
+                "The LOGIC-1 system has detected your newfound knowledge:",
+                "",
+                "SYSTEM ANALYSIS:",
+                "✅ Facts comprehension: COMPLETE",
+                "✅ Query formation: COMPLETE", 
+                "✅ Variable usage: COMPLETE",
+                "✅ Logic foundation: ESTABLISHED",
+                "",
+                "Your supervisor's voice crackles through the intercom:",
+                "",
+                "'Outstanding! You've proven you understand the fundamentals.",
+                "Now it's time for the real challenge - the LOGIC-1 AI system",
+                "is still malfunctioning, and we need you to dive deeper.'",
+                "",
+                "'The corruption goes beyond basic facts and queries. You'll need",
+                "to master advanced concepts like rules, unification, backtracking,",
+                "and recursion to fully restore the system.'",
+                "",
+                "'Are you ready to save Cyberdyne Systems and become a true",
+                "logic programming expert?'",
+                "",
+                "The main terminal flickers to life, awaiting your command...",
+            ],
+            level=GameLevel.TUTORIAL,
+            character="Supervisor",
+            mood="triumphant",
+        )
 
     def get_player_progress(self) -> Dict[str, Any]:
         """Get current player progress."""

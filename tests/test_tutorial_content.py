@@ -4,7 +4,7 @@ Unit tests for tutorial content data structures and navigation logic.
 
 import pytest
 import time
-from game.tutorial_content import (
+from prologresurrected.game.tutorial_content import (
     TutorialProgress,
     TutorialStep,
     TutorialNavigator,

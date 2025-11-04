@@ -109,18 +109,24 @@ reflex deploy
 - Responsive design for various screen sizes
 
 ## Code Organization
-- `main.py`: Reflex app entry point and routing
-- `components/`: Reflex UI components
-  - `terminal.py`: Web terminal component
-  - `retro_ui.py`: 80s styling components including explanation boxes
-- `game/`: Core game logic modules
-  - `story.py`: Narrative and story progression
-  - `puzzles.py`: Puzzle management system
-  - `prolog_concepts.py`: Individual puzzle implementations
-- `tests/`: End-to-end test suites
-  - `test_puzzles.py`: Tests for all puzzle implementations
-  - `test_story.py`: Story progression tests
-  - `test_terminal.py`: UI interaction tests
+- `main.py`: Entry point that imports and runs the Reflex app
+- `prologresurrected/prologresurrected/`: Main Reflex package
+  - `prologresurrected.py`: Main Reflex app, state management, and routing
+  - `components/`: Reflex UI components
+    - `retro_ui.py`: 80s styling components and explanation boxes
+  - `game/`: Core game logic modules
+    - `terminal.py`: Terminal interface and styling utilities
+    - `story.py`: Narrative engine and story progression
+    - `puzzles.py`: Puzzle management system and base classes
+    - `hello_world_puzzle.py`: Hello World tutorial puzzle (main puzzle implementation)
+    - `hello_world_puzzle.py`: Hello World tutorial puzzle
+    - `tutorial_content.py`: Tutorial text and content management
+    - `validation.py`: Input validation utilities
+    - `error_handling.py`: Error handling and user feedback
+- `tests/`: Comprehensive test suites
+  - `e2e/`: End-to-end browser tests with Playwright
+  - `test_*.py`: Unit and integration tests for all modules
+  - Coverage includes puzzles, story, terminal, validation, and error handling
 
 ## Dependencies
 - `reflex`: Web framework for Python
