@@ -1,6 +1,6 @@
 """Logic Quest - Prolog Learning Game Package."""
-from prologresurrected import prologresurrected
+from prologresurrected.prologresurrected import app
 
 __all__ = [
-    "prologresurrected"
+    "app"
 ]

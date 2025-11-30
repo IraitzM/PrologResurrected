@@ -10,6 +10,13 @@ from .story import StoryEngine, GameLevel, StorySegment
 from .puzzles import PuzzleManager, BasePuzzle, PuzzleResult
 from .validation import PrologValidator, ValidationResult
 from .tutorial_content import TutorialSession, TutorialStep
+from .complexity import (
+    ComplexityLevel,
+    ComplexityConfig,
+    ComplexityManager,
+    HintFrequency,
+    ExplanationDepth
+)
 
 __all__ = [
     "Terminal",
@@ -24,4 +31,9 @@ __all__ = [
     "ValidationResult",
     "TutorialSession",
     "TutorialStep",
+    "ComplexityLevel",
+    "ComplexityConfig",
+    "ComplexityManager",
+    "HintFrequency",
+    "ExplanationDepth",
 ]

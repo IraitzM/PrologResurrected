@@ -1,0 +1,26 @@
+{
+  "name": "Expert",
+  "description": "No guidance with optimization challenges and edge cases",
+  "hint_frequency": "none",
+  "explanation_depth": "minimal",
+  "puzzle_parameters": {
+    "max_variables": 8,
+    "max_predicates": 12,
+    "allow_complex_syntax": true,
+    "provide_templates": false,
+    "show_examples": false,
+    "include_step_by_step": false,
+    "syntax_assistance": false,
+    "concept_reinforcement": false,
+    "require_optimization": true,
+    "multiple_solutions": true,
+    "include_edge_cases": true,
+    "performance_constraints": true
+  },
+  "ui_indicators": {
+    "color": "red",
+    "icon": "💀",
+    "badge": "EXPERT"
+  },
+  "scoring_multiplier": 2.0
+}
