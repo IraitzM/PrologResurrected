@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Prolog Concepts – Logic Quest</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0b37c64f34216b628666a8dac638b53b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Logic Quest</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./getting-started.html"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./gameplay.html"> 
+<span class="menu-text">Gameplay</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./concepts.html" aria-current="page"> 
+<span class="menu-text">Concepts</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#core-concepts-covered" id="toc-core-concepts-covered" class="nav-link" data-scroll-target="#core-concepts-covered">Core Concepts Covered</a>
+  <ul class="collapse">
+  <li><a href="#facts---the-foundation-of-knowledge" id="toc-facts---the-foundation-of-knowledge" class="nav-link" data-scroll-target="#facts---the-foundation-of-knowledge">1. Facts - The Foundation of Knowledge</a></li>
+  <li><a href="#queries---asking-questions" id="toc-queries---asking-questions" class="nav-link" data-scroll-target="#queries---asking-questions">2. Queries - Asking Questions</a></li>
+  <li><a href="#variables---finding-multiple-solutions" id="toc-variables---finding-multiple-solutions" class="nav-link" data-scroll-target="#variables---finding-multiple-solutions">3. Variables - Finding Multiple Solutions</a></li>
+  <li><a href="#rules---logical-implications" id="toc-rules---logical-implications" class="nav-link" data-scroll-target="#rules---logical-implications">4. Rules - Logical Implications</a></li>
+  <li><a href="#unification---pattern-matching" id="toc-unification---pattern-matching" class="nav-link" data-scroll-target="#unification---pattern-matching">5. Unification - Pattern Matching</a></li>
+  <li><a href="#backtracking---exploring-alternatives" id="toc-backtracking---exploring-alternatives" class="nav-link" data-scroll-target="#backtracking---exploring-alternatives">6. Backtracking - Exploring Alternatives</a></li>
+  <li><a href="#recursion---elegant-problem-solving" id="toc-recursion---elegant-problem-solving" class="nav-link" data-scroll-target="#recursion---elegant-problem-solving">7. Recursion - Elegant Problem Solving</a></li>
+  </ul></li>
+  <li><a href="#adaptive-learning-system" id="toc-adaptive-learning-system" class="nav-link" data-scroll-target="#adaptive-learning-system">Adaptive Learning System</a>
+  <ul class="collapse">
+  <li><a href="#complexity-levels" id="toc-complexity-levels" class="nav-link" data-scroll-target="#complexity-levels">Complexity Levels</a></li>
+  <li><a href="#how-adaptation-works" id="toc-how-adaptation-works" class="nav-link" data-scroll-target="#how-adaptation-works">How Adaptation Works</a></li>
+  <li><a href="#choosing-your-level" id="toc-choosing-your-level" class="nav-link" data-scroll-target="#choosing-your-level">Choosing Your Level</a></li>
+  </ul></li>
+  <li><a href="#learning-progression" id="toc-learning-progression" class="nav-link" data-scroll-target="#learning-progression">Learning Progression</a>
+  <ul class="collapse">
+  <li><a href="#beginner-level-tutorial" id="toc-beginner-level-tutorial" class="nav-link" data-scroll-target="#beginner-level-tutorial">Beginner Level (Tutorial)</a></li>
+  <li><a href="#intermediate-level-levels-1-2" id="toc-intermediate-level-levels-1-2" class="nav-link" data-scroll-target="#intermediate-level-levels-1-2">Intermediate Level (Levels 1-2)</a></li>
+  <li><a href="#advanced-level-levels-3-4" id="toc-advanced-level-levels-3-4" class="nav-link" data-scroll-target="#advanced-level-levels-3-4">Advanced Level (Levels 3-4)</a></li>
+  <li><a href="#expert-level-level-5" id="toc-expert-level-level-5" class="nav-link" data-scroll-target="#expert-level-level-5">Expert Level (Level 5)</a></li>
+  </ul></li>
+  <li><a href="#practical-applications" id="toc-practical-applications" class="nav-link" data-scroll-target="#practical-applications">Practical Applications</a>
+  <ul class="collapse">
+  <li><a href="#system-debugging-memory-stack-puzzle" id="toc-system-debugging-memory-stack-puzzle" class="nav-link" data-scroll-target="#system-debugging-memory-stack-puzzle">System Debugging (Memory Stack Puzzle)</a></li>
+  <li><a href="#database-queries" id="toc-database-queries" class="nav-link" data-scroll-target="#database-queries">Database Queries</a></li>
+  <li><a href="#family-trees" id="toc-family-trees" class="nav-link" data-scroll-target="#family-trees">Family Trees</a></li>
+  <li><a href="#puzzle-solving" id="toc-puzzle-solving" class="nav-link" data-scroll-target="#puzzle-solving">Puzzle Solving</a></li>
+  </ul></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a>
+  <ul class="collapse">
+  <li><a href="#advanced-learning-support-features" id="toc-advanced-learning-support-features" class="nav-link" data-scroll-target="#advanced-learning-support-features">Advanced Learning Support Features</a></li>
+  </ul></li>
+  <li><a href="#error-handling-learning-support" id="toc-error-handling-learning-support" class="nav-link" data-scroll-target="#error-handling-learning-support">Error Handling &amp; Learning Support</a>
+  <ul class="collapse">
+  <li><a href="#progressive-hint-system" id="toc-progressive-hint-system" class="nav-link" data-scroll-target="#progressive-hint-system">Progressive Hint System</a></li>
+  <li><a href="#common-error-detection" id="toc-common-error-detection" class="nav-link" data-scroll-target="#common-error-detection">Common Error Detection</a></li>
+  <li><a href="#recovery-mechanisms" id="toc-recovery-mechanisms" class="nav-link" data-scroll-target="#recovery-mechanisms">Recovery Mechanisms</a></li>
+  <li><a href="#encouraging-learning-environment" id="toc-encouraging-learning-environment" class="nav-link" data-scroll-target="#encouraging-learning-environment">Encouraging Learning Environment</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Prolog Concepts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Logic Quest teaches Prolog through a carefully structured progression of concepts. Each level builds upon previous knowledge, creating a solid foundation in logic programming.</p>
+</section>
+<section id="core-concepts-covered" class="level2">
+<h2 class="anchored" data-anchor-id="core-concepts-covered">Core Concepts Covered</h2>
+<section id="facts---the-foundation-of-knowledge" class="level3">
+<h3 class="anchored" data-anchor-id="facts---the-foundation-of-knowledge">1. Facts - The Foundation of Knowledge</h3>
+<p><strong>What are Facts?</strong> Facts are unconditional statements of truth in Prolog. They represent basic knowledge about the world.</p>
+<p><strong>Syntax:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>predicate(argument1<span class="kw">,</span> argument2<span class="kw">,</span> ...)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>likes(alice<span class="kw">,</span> chocolate)<span class="kw">.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>parent(tom<span class="kw">,</span> bob)<span class="kw">.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>employee(sarah<span class="kw">,</span> tech_corp)<span class="kw">.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>color(grass<span class="kw">,</span> green)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Facts always end with a period (.) - Predicate names start with lowercase letters - Arguments can be atoms, numbers, or variables - Facts form the knowledge base of your program</p>
+</section>
+<section id="queries---asking-questions" class="level3">
+<h3 class="anchored" data-anchor-id="queries---asking-questions">2. Queries - Asking Questions</h3>
+<p><strong>What are Queries?</strong> Queries are questions you ask Prolog about the facts and rules in your knowledge base.</p>
+<p><strong>Syntax:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> predicate(argument1<span class="kw">,</span> argument2<span class="kw">,</span> ...)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> likes(alice<span class="kw">,</span> chocolate)<span class="kw">.</span>     <span class="co">% Does Alice like chocolate?</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> parent(tom<span class="kw">,</span> bob)<span class="kw">.</span>            <span class="co">% Is Tom Bob's parent?</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> employee(sarah<span class="kw">,</span> tech_corp)<span class="kw">.</span>  <span class="co">% Does Sarah work at Tech Corp?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Queries start with <code>?-</code> - Prolog answers “yes” (true) or “no” (false) - Queries can test existing knowledge - They form the basis for more complex reasoning</p>
+</section>
+<section id="variables---finding-multiple-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="variables---finding-multiple-solutions">3. Variables - Finding Multiple Solutions</h3>
+<p><strong>What are Variables?</strong> Variables in Prolog start with uppercase letters and can match any value. They allow you to find multiple solutions to queries.</p>
+<p><strong>Syntax:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> predicate(<span class="dt">Variable</span><span class="kw">,</span> argument)<span class="kw">.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> predicate(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> likes(alice<span class="kw">,</span> <span class="dt">X</span>)<span class="kw">.</span>        <span class="co">% What does Alice like?</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> likes(<span class="dt">Person</span><span class="kw">,</span> pizza)<span class="kw">.</span>   <span class="co">% Who likes pizza?</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> parent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">.</span>           <span class="co">% Find all parent-child relationships</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Variables start with uppercase letters (X, Person, Thing) - They can match any value in the knowledge base - One query can return multiple solutions - Variables enable pattern matching and discovery</p>
+</section>
+<section id="rules---logical-implications" class="level3">
+<h3 class="anchored" data-anchor-id="rules---logical-implications">4. Rules - Logical Implications</h3>
+<p><strong>What are Rules?</strong> Rules define logical relationships and allow Prolog to derive new knowledge from existing facts.</p>
+<p><strong>Syntax:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>head <span class="kw">:-</span> body<span class="kw">.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>conclusion <span class="kw">:-</span> condition1<span class="kw">,</span> condition2<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grandparent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Z</span>) <span class="kw">:-</span> parent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> parent(<span class="dt">Y</span><span class="kw">,</span> <span class="dt">Z</span>)<span class="kw">.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>happy(<span class="dt">X</span>) <span class="kw">:-</span> likes(<span class="dt">X</span><span class="kw">,</span> chocolate)<span class="kw">,</span> sunny(today)<span class="kw">.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sibling(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>) <span class="kw">:-</span> parent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">X</span>)<span class="kw">,</span> parent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> <span class="dt">X</span> <span class="kw">\=</span> <span class="dt">Y</span><span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Rules have a head (conclusion) and body (conditions) - The <code>:-</code> symbol means “if” or “is true when” - Commas in the body mean “and” - Rules enable logical deduction and inference</p>
+</section>
+<section id="unification---pattern-matching" class="level3">
+<h3 class="anchored" data-anchor-id="unification---pattern-matching">5. Unification - Pattern Matching</h3>
+<p><strong>What is Unification?</strong> Unification is Prolog’s method of matching patterns and binding variables to values.</p>
+<p><strong>How it Works:</strong> - Prolog tries to match query patterns with facts/rules - Variables get bound to specific values during matching - Complex structures can be unified recursively</p>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Fact: person(alice, 25, programmer)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">% Query: ?- person(Name, Age, Job).</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">% Result: Name = alice, Age = 25, Job = programmer</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">% Fact: likes(bob, food(pizza, italian))</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">% Query: ?- likes(bob, food(X, italian)).</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">% Result: X = pizza</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Unification happens automatically during query resolution - Variables get bound to make patterns match - Complex data structures can be unified - Understanding unification is key to Prolog mastery</p>
+</section>
+<section id="backtracking---exploring-alternatives" class="level3">
+<h3 class="anchored" data-anchor-id="backtracking---exploring-alternatives">6. Backtracking - Exploring Alternatives</h3>
+<p><strong>What is Backtracking?</strong> Backtracking is Prolog’s systematic method of exploring all possible solutions to a query.</p>
+<p><strong>How it Works:</strong> 1. Try the first matching fact/rule 2. If it leads to success, report the solution 3. If it fails, backtrack and try the next alternative 4. Continue until all possibilities are exhausted</p>
+<p><strong>Example:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Facts:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>likes(alice<span class="kw">,</span> chocolate)<span class="kw">.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>likes(alice<span class="kw">,</span> ice_cream)<span class="kw">.</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>likes(bob<span class="kw">,</span> pizza)<span class="kw">.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">% Query: ?- likes(alice, X).</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">% Solutions found through backtracking:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">% X = chocolate ;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">% X = ice_cream</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Prolog automatically explores all possible solutions - Backtracking enables finding multiple answers - It’s fundamental to Prolog’s search strategy - Understanding backtracking helps predict program behavior</p>
+</section>
+<section id="recursion---elegant-problem-solving" class="level3">
+<h3 class="anchored" data-anchor-id="recursion---elegant-problem-solving">7. Recursion - Elegant Problem Solving</h3>
+<p><strong>What is Recursion in Prolog?</strong> Recursion allows rules to refer to themselves, enabling elegant solutions to complex problems.</p>
+<p><strong>Structure:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Base case - stops the recursion</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>predicate(base_condition)<span class="kw">.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Recursive case - calls itself with simpler input</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>predicate(input) <span class="kw">:-</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    condition<span class="kw">,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    predicate(simpler_input)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Classic Example - Ancestor Relationship:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Base case: parent is an ancestor</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ancestor(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>) <span class="kw">:-</span> parent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Recursive case: ancestor of ancestor</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ancestor(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Z</span>) <span class="kw">:-</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    parent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    ancestor(<span class="dt">Y</span><span class="kw">,</span> <span class="dt">Z</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Key Learning Points:</strong> - Always define a base case to stop recursion - Recursive case should work toward the base case - Recursion enables processing of arbitrary-depth structures - It’s essential for many Prolog algorithms</p>
+</section>
+</section>
+<section id="adaptive-learning-system" class="level2">
+<h2 class="anchored" data-anchor-id="adaptive-learning-system">Adaptive Learning System</h2>
+<p>Logic Quest features a sophisticated adaptive difficulty system that tailors the learning experience to your skill level. The same core Prolog concepts are taught at all levels, but with different amounts of guidance and complexity.</p>
+<section id="complexity-levels" class="level3">
+<h3 class="anchored" data-anchor-id="complexity-levels">Complexity Levels</h3>
+<section id="beginner-1.0x-scoring" class="level4">
+<h4 class="anchored" data-anchor-id="beginner-1.0x-scoring">🌱 Beginner (1.0x scoring)</h4>
+<p><strong>Perfect for</strong>: First-time Prolog learners, students new to logic programming</p>
+<p><strong>Features</strong>: - Always-available hints with detailed explanations - Templates provided for every exercise - Step-by-step guidance through each concept - Maximum 2 variables, 3 predicates per puzzle - Simple syntax only (no complex constructs) - Detailed error messages with recovery options</p>
+<p><strong>Learning Style</strong>: Maximum hand-holding with comprehensive explanations</p>
+</section>
+<section id="intermediate-1.2x-scoring" class="level4">
+<h4 class="anchored" data-anchor-id="intermediate-1.2x-scoring">⚡ Intermediate (1.2x scoring)</h4>
+<p><strong>Perfect for</strong>: Programmers with some logic programming exposure</p>
+<p><strong>Features</strong>: - Hints available on request - Examples provided but no templates - Moderate guidance with standard explanations - Maximum 4 variables, 5 predicates per puzzle - Complex syntax allowed - Moderate error detail</p>
+<p><strong>Learning Style</strong>: Balanced guidance with room for exploration</p>
+</section>
+<section id="advanced-1.5x-scoring" class="level4">
+<h4 class="anchored" data-anchor-id="advanced-1.5x-scoring">🔥 Advanced (1.5x scoring)</h4>
+<p><strong>Perfect for</strong>: Experienced programmers learning Prolog</p>
+<p><strong>Features</strong>: - Hints only after multiple attempts - No templates or examples provided - Brief explanations focused on key points - Maximum 6 variables, 8 predicates per puzzle - Requires optimization and multiple solution paths - Brief error messages</p>
+<p><strong>Learning Style</strong>: Minimal guidance, emphasis on problem-solving</p>
+</section>
+<section id="expert-2.0x-scoring" class="level4">
+<h4 class="anchored" data-anchor-id="expert-2.0x-scoring">💀 Expert (2.0x scoring)</h4>
+<p><strong>Perfect for</strong>: Prolog experts seeking challenges</p>
+<p><strong>Features</strong>: - No hints available - No templates, examples, or guidance - Minimal explanations - Maximum 8 variables, 12 predicates per puzzle - Edge cases and performance constraints - Minimal error feedback</p>
+<p><strong>Learning Style</strong>: Complete independence, mastery required</p>
+</section>
+</section>
+<section id="how-adaptation-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-adaptation-works">How Adaptation Works</h3>
+<p>The adaptive system modifies multiple aspects of the learning experience:</p>
+<p><strong>Puzzle Parameters</strong>: - Variable and predicate limits scale with complexity - Syntax complexity increases at higher levels - Optimization requirements at advanced/expert levels - Edge cases included only at expert level</p>
+<p><strong>Hint System</strong>: - Frequency: Always → On Request → After Attempts → None - Detail: Detailed → Moderate → Brief → Minimal - Progressive escalation adapts to complexity level</p>
+<p><strong>Educational Content</strong>: - Explanation depth varies from comprehensive to minimal - Examples and templates provided at lower levels - Step-by-step breakdowns at beginner level - Concept reinforcement at beginner/intermediate levels</p>
+<p><strong>Scoring</strong>: - Base score calculated from attempts and hints - Complexity multiplier applied (1.0x to 2.0x) - Higher difficulty = higher potential scores - Separate achievement tracking per level</p>
+</section>
+<section id="choosing-your-level" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-your-level">Choosing Your Level</h3>
+<p><strong>Start with Beginner if</strong>: - You’re new to Prolog or logic programming - You prefer detailed explanations and examples - You want maximum guidance and support - You’re learning programming fundamentals</p>
+<p><strong>Choose Intermediate if</strong>: - You have programming experience - You understand basic logic concepts - You prefer moderate guidance - You want a balanced challenge</p>
+<p><strong>Select Advanced if</strong>: - You’re an experienced programmer - You learn best through problem-solving - You prefer minimal guidance - You want to be challenged</p>
+<p><strong>Pick Expert if</strong>: - You already know Prolog basics - You want maximum challenge - You prefer complete independence - You’re seeking optimization puzzles</p>
+<p>You can change your complexity level at any time during gameplay!</p>
+</section>
+</section>
+<section id="learning-progression" class="level2">
+<h2 class="anchored" data-anchor-id="learning-progression">Learning Progression</h2>
+<section id="beginner-level-tutorial" class="level3">
+<h3 class="anchored" data-anchor-id="beginner-level-tutorial">Beginner Level (Tutorial)</h3>
+<ul>
+<li>Understand what Prolog is and how it differs from other languages</li>
+<li>Create simple facts with proper syntax</li>
+<li>Write basic queries to test knowledge</li>
+<li>Use variables to find multiple solutions</li>
+<li><strong>Complexity</strong>: Maximum guidance with templates and detailed hints</li>
+</ul>
+</section>
+<section id="intermediate-level-levels-1-2" class="level3">
+<h3 class="anchored" data-anchor-id="intermediate-level-levels-1-2">Intermediate Level (Levels 1-2)</h3>
+<ul>
+<li>Build knowledge bases with multiple related facts</li>
+<li>Write rules that define logical relationships</li>
+<li>Understand how Prolog derives new knowledge</li>
+<li>Debug syntax errors and logical mistakes</li>
+<li><strong>Complexity</strong>: Moderate guidance with examples and on-request hints</li>
+</ul>
+</section>
+<section id="advanced-level-levels-3-4" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-level-levels-3-4">Advanced Level (Levels 3-4)</h3>
+<ul>
+<li>Master unification and pattern matching</li>
+<li>Understand backtracking and search strategies</li>
+<li>Write complex rules with multiple conditions</li>
+<li>Solve multi-step logical puzzles</li>
+<li><strong>Complexity</strong>: Minimal guidance with brief hints after attempts</li>
+</ul>
+</section>
+<section id="expert-level-level-5" class="level3">
+<h3 class="anchored" data-anchor-id="expert-level-level-5">Expert Level (Level 5)</h3>
+<ul>
+<li>Design recursive solutions to complex problems</li>
+<li>Understand the relationship between recursion and iteration</li>
+<li>Optimize Prolog programs for efficiency</li>
+<li>Apply logic programming to real-world problems</li>
+<li><strong>Complexity</strong>: No guidance, optimization required, edge cases included</li>
+</ul>
+</section>
+</section>
+<section id="practical-applications" class="level2">
+<h2 class="anchored" data-anchor-id="practical-applications">Practical Applications</h2>
+<section id="system-debugging-memory-stack-puzzle" class="level3">
+<h3 class="anchored" data-anchor-id="system-debugging-memory-stack-puzzle">System Debugging (Memory Stack Puzzle)</h3>
+<p>Use Prolog to investigate system failures through stack trace analysis:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Stack frame facts</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>frame(<span class="dv">1</span><span class="kw">,</span> init_system<span class="kw">,</span> <span class="dv">1000</span><span class="kw">,</span> active)<span class="kw">.</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>frame(<span class="dv">2</span><span class="kw">,</span> allocate_buffer<span class="kw">,</span> <span class="dv">1050</span><span class="kw">,</span> active)<span class="kw">.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>frame(<span class="dv">3</span><span class="kw">,</span> allocate_buffer<span class="kw">,</span> <span class="dv">1100</span><span class="kw">,</span> active)<span class="kw">.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>calls(<span class="dv">1</span><span class="kw">,</span> <span class="dv">2</span>)<span class="kw">.</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>calls(<span class="dv">2</span><span class="kw">,</span> <span class="dv">3</span>)<span class="kw">.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>allocated(<span class="dv">1</span><span class="kw">,</span> <span class="dv">2048</span>)<span class="kw">.</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>allocated(<span class="dv">2</span><span class="kw">,</span> <span class="dv">1048576</span>)<span class="kw">.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>allocated(<span class="dv">3</span><span class="kw">,</span> <span class="dv">1048576</span>)<span class="kw">.</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">% Find frames allocating large amounts of memory</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> allocated(<span class="dt">Frame</span><span class="kw">,</span> <span class="dt">Size</span>)<span class="kw">,</span> <span class="dt">Size</span> <span class="dt">&gt;</span> <span class="dv">1000000</span><span class="kw">.</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">% Find all active frames</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> frame(<span class="dt">ID</span><span class="kw">,</span> <span class="dt">Function</span><span class="kw">,</span> <span class="dt">Time</span><span class="kw">,</span> active)<span class="kw">.</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">% Trace call chains</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> calls(<span class="dt">Caller</span><span class="kw">,</span> <span class="dt">Callee</span>)<span class="kw">,</span> frame(<span class="dt">Callee</span><span class="kw">,</span> <span class="dt">Function</span><span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> error)<span class="kw">.</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">% Compound queries for complex diagnostics</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> allocated(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> <span class="dt">Y</span> <span class="dt">&gt;</span> <span class="dv">1000000</span><span class="kw">,</span> frame(<span class="dt">X</span><span class="kw">,</span> <span class="dt">F</span><span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> active)<span class="kw">.</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">% Negation to find missing cleanup</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> frame(<span class="dt">X</span><span class="kw">,</span> allocate_buffer<span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> <span class="dt">_</span>)<span class="kw">,</span> <span class="kw">\+</span> frame(<span class="dt">Y</span><span class="kw">,</span> cleanup_resources<span class="kw">,</span> <span class="dt">_</span><span class="kw">,</span> <span class="dt">_</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Memory Stack Failure puzzle teaches: - Analyzing stack traces with Prolog queries - Using compound queries with multiple conditions - Applying negation to find missing data - Diagnosing real-world system failures - Pattern recognition in debugging scenarios</p>
+</section>
+<section id="database-queries" class="level3">
+<h3 class="anchored" data-anchor-id="database-queries">Database Queries</h3>
+<p>Prolog excels at querying relational data:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">% Employee database</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>employee(alice<span class="kw">,</span> engineering<span class="kw">,</span> <span class="dv">75000</span>)<span class="kw">.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>employee(bob<span class="kw">,</span> marketing<span class="kw">,</span> <span class="dv">65000</span>)<span class="kw">.</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>manager(charlie<span class="kw">,</span> engineering)<span class="kw">.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">% Find all engineers</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> employee(<span class="dt">Name</span><span class="kw">,</span> engineering<span class="kw">,</span> <span class="dt">Salary</span>)<span class="kw">.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">% Find employees earning over 70k</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">?-</span> employee(<span class="dt">Name</span><span class="kw">,</span> <span class="dt">Dept</span><span class="kw">,</span> <span class="dt">Salary</span>)<span class="kw">,</span> <span class="dt">Salary</span> <span class="dt">&gt;</span> <span class="dv">70000</span><span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="family-trees" class="level3">
+<h3 class="anchored" data-anchor-id="family-trees">Family Trees</h3>
+<p>Model complex relationships:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>parent(tom<span class="kw">,</span> bob)<span class="kw">.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>parent(tom<span class="kw">,</span> liz)<span class="kw">.</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>parent(bob<span class="kw">,</span> ann)<span class="kw">.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>parent(bob<span class="kw">,</span> pat)<span class="kw">.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">% Define derived relationships</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>sibling(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>) <span class="kw">:-</span> parent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">X</span>)<span class="kw">,</span> parent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> <span class="dt">X</span> <span class="kw">\=</span> <span class="dt">Y</span><span class="kw">.</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>grandparent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Z</span>) <span class="kw">:-</span> parent(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> parent(<span class="dt">Y</span><span class="kw">,</span> <span class="dt">Z</span>)<span class="kw">.</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>cousin(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>) <span class="kw">:-</span> grandparent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">X</span>)<span class="kw">,</span> grandparent(<span class="dt">Z</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">,</span> <span class="kw">\+</span> sibling(<span class="dt">X</span><span class="kw">,</span> <span class="dt">Y</span>)<span class="kw">.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="puzzle-solving" class="level3">
+<h3 class="anchored" data-anchor-id="puzzle-solving">Puzzle Solving</h3>
+<p>Solve logical puzzles systematically:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode prolog code-with-copy"><code class="sourceCode prolog"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">% N-Queens problem</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">% Sudoku solver</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">% Graph coloring</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">% Path finding</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
+<p>After mastering these concepts in Logic Quest:</p>
+<ol type="1">
+<li><strong>Explore Advanced Prolog</strong>: Learn about cut (!), negation, and meta-predicates</li>
+<li><strong>Study Constraint Logic Programming</strong>: Solve optimization problems</li>
+<li><strong>Apply to AI</strong>: Use Prolog for expert systems and knowledge representation</li>
+<li><strong>Practice with Real Projects</strong>: Build actual applications using your skills</li>
+</ol>
+<p>The concepts learned in Logic Quest provide a solid foundation for advanced logic programming and artificial intelligence applications. Each puzzle and challenge reinforces these fundamentals while building practical problem-solving skills.</p>
+<p>The concepts learned in Logic Quest are presented through an enhanced terminal interface with comprehensive error handling and educational support:</p>
+<section id="advanced-learning-support-features" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-learning-support-features">Advanced Learning Support Features</h3>
+<ul>
+<li><strong>Progressive Hint System</strong>: 5 escalating levels of help from gentle encouragement to complete solutions</li>
+<li><strong>Intelligent Error Detection</strong>: Automatic categorization of common Prolog syntax mistakes with specific guidance</li>
+<li><strong>Recovery Mechanisms</strong>: Multiple help options for stuck users including alternative explanations and concept reviews</li>
+<li><strong>Encouraging Environment</strong>: Positive, supportive messaging throughout the learning process</li>
+<li><strong>Centered Explanation Boxes</strong>: Clear, retro-styled educational content display with robust terminal rendering</li>
+<li><strong>Defensive Programming</strong>: Safe, stable presentation of learning materials with comprehensive error handling</li>
+</ul>
+</section>
+</section>
+<section id="error-handling-learning-support" class="level2">
+<h2 class="anchored" data-anchor-id="error-handling-learning-support">Error Handling &amp; Learning Support</h2>
+<p>Logic Quest includes a comprehensive error handling system designed to support learners at every step:</p>
+<section id="progressive-hint-system" class="level3">
+<h3 class="anchored" data-anchor-id="progressive-hint-system">Progressive Hint System</h3>
+<p>The game provides 5 escalating levels of help based on your attempt count:</p>
+<ol type="1">
+<li><strong>Gentle (Attempt 1)</strong>: Brief, encouraging hints with general guidance
+<ul>
+<li>“Don’t forget the period (.) at the end!”</li>
+<li>Maintains motivation while providing basic direction</li>
+</ul></li>
+<li><strong>Specific (Attempt 2)</strong>: More detailed hints with pattern examples
+<ul>
+<li>“All Prolog facts must end with a period (.).”</li>
+<li>“Remember the pattern: predicate(argument1, argument2).”</li>
+</ul></li>
+<li><strong>Detailed (Attempt 3)</strong>: Step-by-step checklists and debugging guidance
+<ul>
+<li>Complete syntax checklist with visual indicators</li>
+<li>Systematic approach to identifying the specific issue</li>
+</ul></li>
+<li><strong>Explicit (Attempt 4)</strong>: Very specific instructions with exact patterns
+<ul>
+<li>“Type exactly what you have, but add a period (.) at the end.”</li>
+<li>Clear, actionable guidance for immediate success</li>
+</ul></li>
+<li><strong>Show Answer (Attempt 5+)</strong>: Complete solution with full explanation
+<ul>
+<li>Complete correct answer with component breakdown</li>
+<li>Educational explanation of why the answer is correct</li>
+</ul></li>
+</ol>
+</section>
+<section id="common-error-detection" class="level3">
+<h3 class="anchored" data-anchor-id="common-error-detection">Common Error Detection</h3>
+<p>The system automatically detects and provides specific guidance for:</p>
+<ul>
+<li><strong>Missing Periods</strong>: When facts or queries lack required periods</li>
+<li><strong>Capitalization Issues</strong>: Incorrect uppercase/lowercase in predicates and variables</li>
+<li><strong>Parentheses Problems</strong>: Missing or mismatched parentheses around arguments</li>
+<li><strong>Query Syntax</strong>: Missing <code>?-</code> prefix in Prolog queries</li>
+<li><strong>Variable Formatting</strong>: Lowercase variables that should be uppercase</li>
+<li><strong>Malformed Syntax</strong>: Various other syntax pattern issues</li>
+</ul>
+</section>
+<section id="recovery-mechanisms" class="level3">
+<h3 class="anchored" data-anchor-id="recovery-mechanisms">Recovery Mechanisms</h3>
+<p>When you’re stuck, the system offers multiple recovery options:</p>
+<ul>
+<li><strong>Continue Trying</strong>: Encouragement to keep attempting with additional hints</li>
+<li><strong>Alternative Explanations</strong>: Different ways to understand the same concept</li>
+<li><strong>Similar Examples</strong>: Related examples to clarify the pattern</li>
+<li><strong>Complete Answer</strong>: Full solution with educational breakdown</li>
+<li><strong>Skip Exercise</strong>: Option to move forward and return later</li>
+<li><strong>Concept Review</strong>: Quick refreshers on key Prolog concepts</li>
+</ul>
+</section>
+<section id="encouraging-learning-environment" class="level3">
+<h3 class="anchored" data-anchor-id="encouraging-learning-environment">Encouraging Learning Environment</h3>
+<p>All error messages maintain a positive, supportive tone:</p>
+<ul>
+<li>Uses encouraging phrases like “Great attempt!”, “You’re learning!”, “Don’t give up!”</li>
+<li>Frames mistakes as natural parts of the learning process</li>
+<li>Includes visual elements (emojis) to maintain engagement</li>
+<li>Avoids discouraging language while providing clear guidance</li>
+<li>Celebrates persistence and effort throughout the learning journey</li>
+</ul>
+<p>This comprehensive support system ensures that learners can progress confidently through Prolog concepts while receiving the help they need exactly when they need it.</p>
+<p>Ready to put these concepts into practice? <a href="./getting-started.html">Start playing</a> Logic Quest!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/IraitzM\.github\.io\/PrologResurrected\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
