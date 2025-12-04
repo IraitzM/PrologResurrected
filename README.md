@@ -10,14 +10,23 @@ You are a junior programmer at Cyberdyne Systems in 1985. The company's AI resea
 ## Features
 
 ### ✅ Implemented
-- **Comprehensive Prolog Validation**: Robust syntax validation with detailed error messages and hints
+- **Adaptive Difficulty System**: Four complexity levels that dynamically adjust puzzle parameters, hint availability, and scoring
+- **Complexity-Aware Puzzles**: Automatic puzzle adaptation based on player skill level with type-specific modifications
+- **Memory Stack Debugging Puzzle**: First adventure mode puzzle teaching system debugging through Prolog queries and stack trace analysis
+- **Comprehensive Prolog Validation**: Robust syntax validation with detailed error messages and hints, including compound queries and negation
 - **Hello World Tutorial Content**: Complete tutorial structure with step-by-step learning progression
 - **Tutorial Management System**: Progress tracking, navigation, and session management
-- **Puzzle Management Framework**: Complete base classes and management system for Prolog puzzles
-- **Educational Content**: Rich explanations, examples, and practice exercises
+- **Puzzle Management Framework**: Complete base classes and management system for Prolog puzzles with complexity integration
+- **Educational Content**: Rich explanations, examples, and practice exercises adapted to complexity level
 - **Development Tooling**: Task runner, testing framework, and code quality tools
 
 ### ✅ Recently Implemented
+- **Adaptive Complexity System**: Four difficulty levels (Beginner, Intermediate, Advanced, Expert) with dynamic puzzle adaptation, complexity-aware hints, and scoring multipliers
+- **Complexity Configuration**: JSON-based configuration system for customizing difficulty parameters, hint frequency, and explanation depth
+- **Adaptive Puzzle Factory**: Automatically adapts puzzles to selected complexity level with type-specific modifications for facts, queries, rules, patterns, and deductions
+- **Memory Stack Failure Puzzle**: First adventure mode puzzle teaching debugging through Prolog-based investigation of simulated system failures with stack traces and diagnostic queries
+- **Complexity-Aware Hint System**: Intelligent hint delivery that adapts to player skill level with configurable frequency and detail
+- **Progress Tracking by Complexity**: Separate achievement tracking for each difficulty level with completion statistics and average scores
 - **Comprehensive Error Handling System**: Advanced progressive hint system with escalating help levels, specific error messages for common Prolog syntax mistakes, encouraging tone throughout all interactions, and recovery mechanisms for stuck users
 - **Hello World Prolog Tutorial**: Complete step-by-step tutorial implementation with interactive exercises, progress tracking, and educational content delivery
 - **Advanced Validation Integration**: Seamless integration between error handling system and Prolog validation with structured error feedback
@@ -130,17 +139,34 @@ uv run playwright test
 │   └── prologresurrected.py # Main Reflex app with interactive tutorial system
 ├── game/                     # Core game logic modules
 │   ├── __init__.py
+│   ├── complexity.py         # Core complexity level definitions and management
+│   ├── complexity_config.py  # Configuration loading and validation system
+│   ├── complexity_help.py    # Complexity-aware help and hint system
+│   ├── complexity_error_handling.py # Error handling with complexity adaptation
+│   ├── adaptive_puzzle_factory.py # Factory for creating complexity-adapted puzzles
 │   ├── validation.py         # Prolog syntax validation utilities
 │   ├── tutorial_content.py   # Tutorial content, navigation, and progress tracking
-│   ├── puzzles.py           # Puzzle management framework and base classes
-│   ├── hello_world_puzzle.py # Complete Hello World tutorial implementation
+│   ├── puzzles.py           # Puzzle management framework with complexity integration
+│   ├── hello_world_puzzle.py # Complete Hello World tutorial with complexity adaptation
+│   ├── memory_stack_puzzle.py # Memory Stack Failure debugging puzzle
 │   ├── error_handling.py    # Comprehensive error handling system with progressive hints
+│   ├── hint_system.py       # Complexity-aware hint generation system
 │   ├── terminal.py          # Terminal interface and styling (Reflex-based)
-│   └── story.py             # Narrative engine and story progression
+│   ├── story.py             # Narrative engine and story progression
+│   └── config/
+│       └── complexity/       # JSON configuration files for complexity levels
+│           ├── beginner.json
+│           ├── intermediate.json
+│           ├── advanced.json
+│           └── expert.json
 ├── components/               # Reflex UI components
 │   ├── __init__.py
 │   └── retro_ui.py          # 80s cyberpunk styling components (neon colors, terminal windows, ASCII art, explanation boxes)
 ├── tests/                    # Comprehensive test suite
+│   ├── test_complexity.py    # Complexity system tests
+│   ├── test_complexity_config.py # Configuration loading tests
+│   ├── test_adaptive_puzzle_factory.py # Puzzle adaptation tests
+│   ├── test_memory_stack_puzzle.py # Memory Stack puzzle tests
 │   ├── test_validation.py    # Validation system tests
 │   ├── test_tutorial_content.py # Tutorial content tests
 │   ├── test_puzzles.py       # Puzzle management tests
@@ -153,6 +179,7 @@ uv run playwright test
 │       ├── test_welcome_screen.py
 │       ├── test_tutorial_flow.py
 │       ├── test_adventure_mode.py
+│       ├── test_complexity_selection_interface.py
 │       └── test_full_user_journey.py
 ├── .kiro/
 │   └── specs/
@@ -189,6 +216,98 @@ The game includes a comprehensive beginner tutorial that teaches Prolog fundamen
 - **TutorialProgress**: Tracks user advancement, mistakes, hints, and completion times
 - **TutorialNavigator**: Handles step navigation and content loading
 - **TutorialSession**: Manages complete tutorial sessions with progress persistence
+
+## Adaptive Complexity System
+
+Logic Quest features a sophisticated adaptive difficulty system that tailors the learning experience to your skill level:
+
+### Four Complexity Levels
+
+#### 🌱 Beginner
+- **Maximum guidance** with step-by-step explanations
+- **Always-available hints** with detailed feedback
+- **Templates and examples** for every exercise
+- **Scoring multiplier**: 1.0x
+- **UI Indicator**: Green 🌱
+
+#### ⚡ Intermediate
+- **Moderate guidance** with standard complexity
+- **Hints on request** with moderate detail
+- **Examples provided** but no templates
+- **Scoring multiplier**: 1.2x
+- **UI Indicator**: Cyan ⚡
+
+#### 🔥 Advanced
+- **Minimal guidance** with complex problems
+- **Hints after attempts** with brief explanations
+- **No templates or examples**
+- **Requires optimization** and multiple solution paths
+- **Scoring multiplier**: 1.5x
+- **UI Indicator**: Yellow 🔥
+
+#### 💀 Expert
+- **No guidance** with optimization challenges
+- **No hints available**
+- **Edge cases and performance constraints**
+- **Requires mastery** of all concepts
+- **Scoring multiplier**: 2.0x
+- **UI Indicator**: Red 💀
+
+### Adaptive Features
+
+#### Dynamic Puzzle Adaptation
+- **Automatic adjustment** of puzzle parameters based on complexity level
+- **Type-specific modifications** for facts, queries, rules, patterns, and deductions
+- **Variable limits** and predicate complexity scaled to skill level
+- **Syntax assistance** and templates provided at lower levels
+
+#### Complexity-Aware Hints
+- **Hint frequency** adapts to complexity level (always, on-request, after-attempts, minimal, none)
+- **Explanation depth** varies from detailed to minimal
+- **Progressive guidance** with escalating specificity
+- **Context-sensitive** help based on puzzle type and player progress
+
+#### Separate Progress Tracking
+- **Per-level achievements** track puzzles completed and scores at each complexity
+- **Average scores** calculated separately for each difficulty level
+- **Completion history** records which puzzles were solved at which complexity
+- **Concept mastery** tracked across all complexity levels
+
+### Configuration System
+
+The complexity system uses JSON configuration files for easy customization:
+
+```json
+{
+  "name": "Beginner",
+  "description": "Maximum guidance with step-by-step explanations",
+  "hint_frequency": "always",
+  "explanation_depth": "detailed",
+  "puzzle_parameters": {
+    "max_variables": 2,
+    "max_predicates": 3,
+    "allow_complex_syntax": false,
+    "provide_templates": true,
+    "show_examples": true
+  },
+  "ui_indicators": {
+    "color": "neon_green",
+    "icon": "🌱",
+    "badge": "BEGINNER"
+  },
+  "scoring_multiplier": 1.0
+}
+```
+
+Configuration files are located in `prologresurrected/game/config/complexity/` and can be customized to create custom difficulty profiles.
+
+### Complexity Selection
+
+Players select their complexity level at the start of each game mode:
+- **Tutorial mode**: Complexity selection before starting Hello World tutorial
+- **Adventure mode**: Complexity selection before entering main game
+- **In-game changes**: Players can change complexity level during gameplay with confirmation
+- **Visual indicators**: Current complexity level displayed with color-coded badges
 
 ## Puzzle Management System
 
@@ -247,11 +366,22 @@ Centralized management system that handles:
 
 ### Example Puzzle Implementation
 
-The framework includes `SimpleFactPuzzle` as a reference implementation:
+The framework includes multiple reference implementations:
+
+#### SimpleFactPuzzle
 - Validates creation of specific Prolog facts
 - Progressive hint system with 4 levels of assistance
 - Integration with PrologValidator for syntax checking
 - Semantic validation for puzzle-specific requirements
+
+#### Memory Stack Failure Puzzle
+First adventure mode puzzle teaching debugging concepts:
+- **Stack trace analysis**: Examine simulated system failures with realistic stack frames
+- **Prolog-based investigation**: Write queries to diagnose root causes
+- **Multiple failure scenarios**: Memory leaks, stack overflows, null pointers, deadlocks, resource exhaustion
+- **Compound query support**: Use complex queries with multiple conditions and negation
+- **Educational feedback**: Significance detection highlights important discoveries
+- **Complexity adaptation**: Puzzle difficulty scales with selected complexity level
 
 ## State Management Architecture
 
@@ -336,6 +466,81 @@ The validation system returns a `ValidationResult` dataclass containing:
 - `parsed_components`: Dictionary of extracted syntax components (if valid)
 
 ### Example Usage
+
+#### Complexity System
+```python
+from game.complexity import ComplexityLevel, ComplexityManager
+from game.adaptive_puzzle_factory import AdaptivePuzzleFactory
+from game.puzzles import PuzzleManager
+
+# Initialize complexity manager
+complexity_mgr = ComplexityManager()
+
+# Set complexity level
+complexity_mgr.set_complexity_level(ComplexityLevel.INTERMEDIATE)
+
+# Get current configuration
+config = complexity_mgr.get_current_config()
+print(f"Level: {config.name}")
+print(f"Hint Frequency: {config.hint_frequency.value}")
+print(f"Scoring Multiplier: {config.scoring_multiplier}x")
+
+# Create adaptive puzzle factory
+factory = AdaptivePuzzleFactory()
+
+# Adapt a puzzle to current complexity level
+from game.hello_world_puzzle import HelloWorldPuzzle
+base_puzzle = HelloWorldPuzzle()
+adapted_puzzle = factory.create_adapted_puzzle(base_puzzle, ComplexityLevel.ADVANCED)
+
+# Get adaptation summary
+summary = factory.get_adaptation_summary(adapted_puzzle)
+print(f"Adapted for: {summary['complexity_level']}")
+print(f"Adaptations: {summary['adaptations']}")
+
+# Use with puzzle manager
+manager = PuzzleManager()
+manager.set_complexity_level(ComplexityLevel.EXPERT)
+
+# Get complexity-specific achievements
+achievements = manager.get_complexity_achievements(ComplexityLevel.INTERMEDIATE)
+print(f"Puzzles completed at Intermediate: {achievements['puzzles_completed']}")
+print(f"Average score: {achievements['average_score']}")
+```
+
+#### Memory Stack Puzzle
+```python
+from game.memory_stack_puzzle import MemoryStackPuzzle, FailureScenario
+
+# Create memory stack puzzle
+puzzle = MemoryStackPuzzle()
+
+# Get puzzle description
+description = puzzle.get_description()
+print(description)
+
+# Get initial context (stack trace facts)
+context = puzzle.get_initial_context()
+print(context['facts'])  # Prolog facts representing stack frames
+
+# Validate a diagnostic query
+result = puzzle.validate_solution("?- frame(X, process_request, Y, error).")
+if result.is_valid:
+    print("Valid query!")
+    print(f"Results: {result.parsed_components}")
+
+# Use compound queries
+compound_query = "?- allocated(X, Y), Y > 1000000."
+result = puzzle.validate_solution(compound_query)
+
+# Use negation queries
+negation_query = "?- \\+ status(X, completed)."
+result = puzzle.validate_solution(negation_query)
+
+# Get complexity-adapted hints
+hint = puzzle.get_complexity_adapted_hint(1)
+print(hint)
+```
 
 #### Error Handling System
 ```python

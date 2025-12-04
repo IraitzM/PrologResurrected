@@ -193,6 +193,119 @@ ancestor(X, Z) :-
 - Recursion enables processing of arbitrary-depth structures
 - It's essential for many Prolog algorithms
 
+## Adaptive Learning System
+
+Logic Quest features a sophisticated adaptive difficulty system that tailors the learning experience to your skill level. The same core Prolog concepts are taught at all levels, but with different amounts of guidance and complexity.
+
+### Complexity Levels
+
+#### 🌱 Beginner (1.0x scoring)
+**Perfect for**: First-time Prolog learners, students new to logic programming
+
+**Features**:
+- Always-available hints with detailed explanations
+- Templates provided for every exercise
+- Step-by-step guidance through each concept
+- Maximum 2 variables, 3 predicates per puzzle
+- Simple syntax only (no complex constructs)
+- Detailed error messages with recovery options
+
+**Learning Style**: Maximum hand-holding with comprehensive explanations
+
+#### ⚡ Intermediate (1.2x scoring)
+**Perfect for**: Programmers with some logic programming exposure
+
+**Features**:
+- Hints available on request
+- Examples provided but no templates
+- Moderate guidance with standard explanations
+- Maximum 4 variables, 5 predicates per puzzle
+- Complex syntax allowed
+- Moderate error detail
+
+**Learning Style**: Balanced guidance with room for exploration
+
+#### 🔥 Advanced (1.5x scoring)
+**Perfect for**: Experienced programmers learning Prolog
+
+**Features**:
+- Hints only after multiple attempts
+- No templates or examples provided
+- Brief explanations focused on key points
+- Maximum 6 variables, 8 predicates per puzzle
+- Requires optimization and multiple solution paths
+- Brief error messages
+
+**Learning Style**: Minimal guidance, emphasis on problem-solving
+
+#### 💀 Expert (2.0x scoring)
+**Perfect for**: Prolog experts seeking challenges
+
+**Features**:
+- No hints available
+- No templates, examples, or guidance
+- Minimal explanations
+- Maximum 8 variables, 12 predicates per puzzle
+- Edge cases and performance constraints
+- Minimal error feedback
+
+**Learning Style**: Complete independence, mastery required
+
+### How Adaptation Works
+
+The adaptive system modifies multiple aspects of the learning experience:
+
+**Puzzle Parameters**:
+- Variable and predicate limits scale with complexity
+- Syntax complexity increases at higher levels
+- Optimization requirements at advanced/expert levels
+- Edge cases included only at expert level
+
+**Hint System**:
+- Frequency: Always → On Request → After Attempts → None
+- Detail: Detailed → Moderate → Brief → Minimal
+- Progressive escalation adapts to complexity level
+
+**Educational Content**:
+- Explanation depth varies from comprehensive to minimal
+- Examples and templates provided at lower levels
+- Step-by-step breakdowns at beginner level
+- Concept reinforcement at beginner/intermediate levels
+
+**Scoring**:
+- Base score calculated from attempts and hints
+- Complexity multiplier applied (1.0x to 2.0x)
+- Higher difficulty = higher potential scores
+- Separate achievement tracking per level
+
+### Choosing Your Level
+
+**Start with Beginner if**:
+- You're new to Prolog or logic programming
+- You prefer detailed explanations and examples
+- You want maximum guidance and support
+- You're learning programming fundamentals
+
+**Choose Intermediate if**:
+- You have programming experience
+- You understand basic logic concepts
+- You prefer moderate guidance
+- You want a balanced challenge
+
+**Select Advanced if**:
+- You're an experienced programmer
+- You learn best through problem-solving
+- You prefer minimal guidance
+- You want to be challenged
+
+**Pick Expert if**:
+- You already know Prolog basics
+- You want maximum challenge
+- You prefer complete independence
+- You're seeking optimization puzzles
+
+You can change your complexity level at any time during gameplay!
+
 ## Learning Progression
 
 ### Beginner Level (Tutorial)
@@ -200,26 +313,66 @@ ancestor(X, Z) :-
 - Create simple facts with proper syntax
 - Write basic queries to test knowledge
 - Use variables to find multiple solutions
+- **Complexity**: Maximum guidance with templates and detailed hints
 
 ### Intermediate Level (Levels 1-2)
 - Build knowledge bases with multiple related facts
 - Write rules that define logical relationships
 - Understand how Prolog derives new knowledge
 - Debug syntax errors and logical mistakes
+- **Complexity**: Moderate guidance with examples and on-request hints
 
 ### Advanced Level (Levels 3-4)
 - Master unification and pattern matching
 - Understand backtracking and search strategies
 - Write complex rules with multiple conditions
 - Solve multi-step logical puzzles
+- **Complexity**: Minimal guidance with brief hints after attempts
 
 ### Expert Level (Level 5)
 - Design recursive solutions to complex problems
 - Understand the relationship between recursion and iteration
 - Optimize Prolog programs for efficiency
 - Apply logic programming to real-world problems
+- **Complexity**: No guidance, optimization required, edge cases included
 
 ## Practical Applications
+
+### System Debugging (Memory Stack Puzzle)
+Use Prolog to investigate system failures through stack trace analysis:
+```prolog
+% Stack frame facts
+frame(1, init_system, 1000, active).
+frame(2, allocate_buffer, 1050, active).
+frame(3, allocate_buffer, 1100, active).
+calls(1, 2).
+calls(2, 3).
+allocated(1, 2048).
+allocated(2, 1048576).
+allocated(3, 1048576).
+
+% Find frames allocating large amounts of memory
+?- allocated(Frame, Size), Size > 1000000.
+
+% Find all active frames
+?- frame(ID, Function, Time, active).
+
+% Trace call chains
+?- calls(Caller, Callee), frame(Callee, Function, _, error).
+
+% Compound queries for complex diagnostics
+?- allocated(X, Y), Y > 1000000, frame(X, F, _, active).
+
+% Negation to find missing cleanup
+?- frame(X, allocate_buffer, _, _), \+ frame(Y, cleanup_resources, _, _).
+```
+
+The Memory Stack Failure puzzle teaches:
+- Analyzing stack traces with Prolog queries
+- Using compound queries with multiple conditions
+- Applying negation to find missing data
+- Diagnosing real-world system failures
+- Pattern recognition in debugging scenarios
 
 ### Database Queries
 Prolog excels at querying relational data:
