@@ -9,11 +9,14 @@ Logic Quest is an immersive 80s cyberpunk terminal game that teaches Prolog and 
 
 ### 🎮 Key Features
 
+- **Adaptive Difficulty System**: Four complexity levels (Beginner, Intermediate, Advanced, Expert) that dynamically adjust puzzle parameters, hint availability, and scoring multipliers
+- **Complexity-Aware Learning**: Automatic puzzle adaptation based on your skill level with type-specific modifications for different Prolog concepts
+- **Memory Stack Debugging**: First adventure puzzle teaching system debugging through Prolog queries and stack trace analysis
 - **Comprehensive Error Handling**: Advanced progressive hint system with 5 escalating help levels, specific error messages for common Prolog mistakes, and encouraging tone throughout
 - **Hello World Tutorial**: Complete step-by-step tutorial with interactive exercises, progress tracking, and educational content delivery
 - **Recovery Mechanisms**: Multiple help options for stuck users including alternative explanations, concept reviews, and adaptive support
 - **Full-Height Web Terminal**: Experience authentic 80s computing in your browser with optimized layout that uses the entire viewport
-- **Progressive Learning**: Master Prolog concepts step-by-step from facts to recursion
+- **Progressive Learning**: Master Prolog concepts step-by-step from facts to recursion with difficulty scaling
 - **Interactive Storytelling**: Save Cyberdyne Systems' AI while learning logic programming
 - **Real-time Validation**: Get instant feedback on your Prolog syntax with intelligent error detection and helpful hints
 - **Modern Web Interface**: Built with Reflex framework for responsive, cross-platform access with dynamic height calculations

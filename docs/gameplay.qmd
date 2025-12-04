@@ -8,6 +8,22 @@ Logic Quest combines education with adventure in a retro cyberpunk setting. You'
 
 ## Game Structure
 
+### Complexity Selection
+
+Before starting any game mode, you'll select your difficulty level:
+
+- **🌱 Beginner**: Maximum guidance with templates, examples, and always-available hints (1.0x scoring)
+- **⚡ Intermediate**: Moderate guidance with examples and hints on request (1.2x scoring)
+- **🔥 Advanced**: Minimal guidance with brief hints after attempts (1.5x scoring)
+- **💀 Expert**: No guidance, no hints, optimization required (2.0x scoring)
+
+Your complexity level affects:
+- Hint availability and detail
+- Explanation depth
+- Puzzle parameters (variables, predicates, syntax complexity)
+- Scoring multipliers
+- Template and example availability
+
 ### Tutorial Mode: Hello World Prolog
 
 Perfect for beginners, the tutorial covers:
@@ -19,15 +35,20 @@ Perfect for beginners, the tutorial covers:
 5. **Variables**: Using variables to find multiple solutions
 6. **Completion**: Summary and next steps
 
+The tutorial adapts to your selected complexity level, providing more or less guidance accordingly.
+
 ### Main Adventure: Memory Bank Restoration
 
-The full game consists of 5 levels, each focusing on a key Prolog concept:
+The full game consists of multiple levels, each focusing on a key Prolog concept:
 
+- **Memory Stack Failure**: Debug system failures using Prolog queries and stack trace analysis
 - **Level 1 - Facts Database**: Restore basic knowledge
 - **Level 2 - Inference Engine**: Repair logical rules
 - **Level 3 - Pattern Matching**: Fix unification systems
 - **Level 4 - Search Algorithms**: Restore backtracking
 - **Level 5 - Recursive Core**: Master recursive problem solving
+
+Each puzzle adapts to your complexity level with appropriate challenge and guidance.
 
 ## Interface Guide
 
@@ -52,10 +73,11 @@ Once in the game terminal, use these commands:
 
 ```
 LOGIC-1 > help              # Show available commands
-LOGIC-1 > hint              # Get guidance for current step
+LOGIC-1 > hint              # Get guidance for current step (availability depends on complexity)
 LOGIC-1 > menu              # Return to main menu
 LOGIC-1 > status            # Check progress and stats
-LOGIC-1 > hint              # Get a hint for current puzzle
+LOGIC-1 > complexity        # View or change complexity level
+LOGIC-1 > achievements      # View achievements by complexity level
 ```
 
 ### Navigation
@@ -149,9 +171,11 @@ LOGIC-1 > likes(alice, chocolate)
 Your performance is tracked across multiple dimensions:
 
 - **Puzzle Score**: Based on attempts and hints used
+- **Complexity Multiplier**: Higher difficulty levels earn bonus points (1.0x to 2.0x)
 - **Speed Bonus**: Faster completion earns extra points
 - **Accuracy Rating**: Fewer mistakes improve your rating
 - **Concept Mastery**: Track which Prolog concepts you've learned
+- **Per-Level Achievements**: Separate tracking for each complexity level
 
 ### Progress Tracking
 
@@ -161,15 +185,39 @@ The game maintains detailed statistics:
 - Mistakes made and lessons learned
 - Time spent on each concept
 - Overall completion percentage
+- Puzzles completed at each complexity level
+- Average scores by difficulty
+- Complexity level changes during gameplay
 
-### Difficulty Scaling
+### Adaptive Difficulty
 
-Puzzles adapt to your skill level:
+Puzzles dynamically adapt to your selected complexity level:
 
-- **Beginner**: Step-by-step guidance with detailed hints
-- **Intermediate**: Less hand-holding, more complex scenarios
-- **Advanced**: Multi-step problems requiring deeper understanding
-- **Expert**: Open-ended challenges testing mastery
+- **🌱 Beginner**: Step-by-step guidance with detailed hints, templates, and examples (1.0x scoring)
+  - Always-available hints with detailed explanations
+  - Templates provided for every exercise
+  - Maximum 2 variables, 3 predicates
+  - Simple syntax only
+  
+- **⚡ Intermediate**: Moderate guidance with standard complexity (1.2x scoring)
+  - Hints available on request
+  - Examples provided but no templates
+  - Maximum 4 variables, 5 predicates
+  - Complex syntax allowed
+  
+- **🔥 Advanced**: Minimal guidance with complex problems (1.5x scoring)
+  - Hints only after multiple attempts
+  - No templates or examples
+  - Maximum 6 variables, 8 predicates
+  - Requires optimization and multiple solution paths
+  
+- **💀 Expert**: No guidance with optimization challenges (2.0x scoring)
+  - No hints available
+  - Maximum 8 variables, 12 predicates
+  - Edge cases and performance constraints
+  - Requires complete mastery
+
+You can change your complexity level at any time during gameplay.
 
 ## Learning Features
 
