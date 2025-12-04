@@ -13,6 +13,7 @@ from .error_handling import (
     ProgressiveHintSystem, RecoveryMechanisms, ErrorContext, 
     ErrorCategory, HintLevel, create_comprehensive_error_handler
 )
+from .complexity import ComplexityLevel
 
 
 class HelloWorldPuzzle(BasePuzzle):
@@ -43,6 +44,118 @@ class HelloWorldPuzzle(BasePuzzle):
             TutorialStep.VARIABLES_INTRODUCTION: self.step_variables_introduction,
             TutorialStep.COMPLETION: self.step_completion,
         }
+        
+        # Complexity-specific configuration
+        self._complexity_adapted = False
+        self._apply_complexity_adaptations()
+
+    def _apply_complexity_adaptations(self) -> None:
+        """Apply complexity-specific adaptations to the tutorial."""
+        level = self.get_complexity_level()
+        params = self.get_complexity_parameters()
+        
+        # Store complexity-specific settings
+        self._show_detailed_explanations = params.get("show_examples", True)
+        self._provide_step_by_step = params.get("provide_templates", True)
+        self._max_attempts_per_exercise = 5 if level == ComplexityLevel.BEGINNER else 3
+        self._show_syntax_help = params.get("show_examples", True)
+        
+        # Adjust tutorial flow based on complexity
+        if level == ComplexityLevel.BEGINNER:
+            self._tutorial_pace = "slow"  # More explanations, more examples
+            self._hint_frequency = "always"
+            self._error_detail_level = "detailed"
+        elif level == ComplexityLevel.INTERMEDIATE:
+            self._tutorial_pace = "moderate"  # Standard explanations
+            self._hint_frequency = "on_request"
+            self._error_detail_level = "moderate"
+        elif level == ComplexityLevel.ADVANCED:
+            self._tutorial_pace = "fast"  # Brief explanations
+            self._hint_frequency = "minimal"
+            self._error_detail_level = "brief"
+        else:  # EXPERT
+            self._tutorial_pace = "minimal"  # Minimal explanations
+            self._hint_frequency = "none"
+            self._error_detail_level = "minimal"
+        
+        self._complexity_adapted = True
+
+    def set_complexity_level(self, level: ComplexityLevel) -> None:
+        """
+        Override to reapply adaptations when complexity level changes.
+        
+        Args:
+            level: The new complexity level
+        """
+        super().set_complexity_level(level)
+        self._apply_complexity_adaptations()
+
+    def _get_complexity_adapted_content(self, base_content: list, content_type: str = "explanation") -> list:
+        """
+        Adapt content based on complexity level.
+        
+        Args:
+            base_content: The base content lines
+            content_type: Type of content ("explanation", "example", "hint")
+            
+        Returns:
+            Adapted content lines
+        """
+        level = self.get_complexity_level()
+        
+        if level == ComplexityLevel.BEGINNER:
+            # Keep all content, add extra encouragement
+            return base_content
+        elif level == ComplexityLevel.INTERMEDIATE:
+            # Keep most content, remove some beginner-specific encouragement
+            return base_content
+        elif level == ComplexityLevel.ADVANCED:
+            # Condense content, focus on key points
+            if content_type == "explanation" and len(base_content) > 5:
+                # Keep first few lines and last few lines
+                return base_content[:3] + ["..."] + base_content[-2:]
+            return base_content
+        else:  # EXPERT
+            # Minimal content, just the essentials
+            if content_type == "explanation" and len(base_content) > 3:
+                return base_content[:2]
+            return base_content[:3] if len(base_content) > 3 else base_content
+
+    def _should_show_component_exercise(self) -> bool:
+        """Determine if component identification exercise should be shown."""
+        level = self.get_complexity_level()
+        # Only show for BEGINNER and INTERMEDIATE
+        return level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]
+
+    def _should_show_detailed_syntax_breakdown(self) -> bool:
+        """Determine if detailed syntax breakdown should be shown."""
+        level = self.get_complexity_level()
+        # Show for BEGINNER and INTERMEDIATE
+        return level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]
+
+    def _get_max_attempts_for_exercise(self) -> int:
+        """Get maximum attempts allowed for an exercise based on complexity."""
+        level = self.get_complexity_level()
+        if level == ComplexityLevel.BEGINNER:
+            return 5  # More attempts for beginners
+        elif level == ComplexityLevel.INTERMEDIATE:
+            return 4
+        elif level == ComplexityLevel.ADVANCED:
+            return 3
+        else:  # EXPERT
+            return 2  # Fewer attempts for experts
+
+    def _get_hint_detail_level(self) -> str:
+        """Get the level of detail for hints based on complexity."""
+        level = self.get_complexity_level()
+        if level == ComplexityLevel.BEGINNER:
+            return "detailed"
+        elif level == ComplexityLevel.INTERMEDIATE:
+            return "moderate"
+        elif level == ComplexityLevel.ADVANCED:
+            return "brief"
+        else:  # EXPERT
+            return "minimal"
 
     def run(self, terminal) -> bool:
         """
@@ -130,6 +243,7 @@ class HelloWorldPuzzle(BasePuzzle):
         
         Provides an engaging introduction to Prolog with 80s cyberpunk theming,
         explaining what Prolog is and how it differs from other programming languages.
+        Adapts content based on complexity level.
         
         Args:
             terminal: Terminal interface for output
@@ -139,72 +253,119 @@ class HelloWorldPuzzle(BasePuzzle):
         """
         # Get the introduction content
         content = self.tutorial_session.get_current_content()
+        level = self.get_complexity_level()
         
         # Clear terminal for fresh start
         terminal.clear_terminal()
         
-        # Display cyberpunk-themed header
+        # Display cyberpunk-themed header (always show for atmosphere)
         terminal.add_output("", "green")  # Empty line for spacing
         self._display_cyberpunk_header(terminal)
         terminal.add_output("", "green")  # Empty line for spacing
         
         # Display main title with visual flair
         terminal.add_output("=" * 60, "cyan")
-        terminal.add_output(content.get("title", "Welcome to Prolog Programming").center(60), "yellow")
-        terminal.add_output(content.get("subtitle", "Your Journey into Logic Programming Begins").center(60), "cyan")
+        title_text = content.get("title", "Welcome to Prolog Programming")
+        if level == ComplexityLevel.EXPERT:
+            title_text = "Prolog Programming Challenge"
+        terminal.add_output(title_text.center(60), "yellow")
+        
+        subtitle_text = content.get("subtitle", "Your Journey into Logic Programming Begins")
+        if level == ComplexityLevel.ADVANCED:
+            subtitle_text = "Advanced Logic Programming"
+        elif level == ComplexityLevel.EXPERT:
+            subtitle_text = "Expert-Level Prolog"
+        terminal.add_output(subtitle_text.center(60), "cyan")
         terminal.add_output("=" * 60, "cyan")
         terminal.add_output("", "green")
         
-        # Display cyberpunk flavor text in a box
-        cyberpunk_text = content.get("cyberpunk_flavor", [])
-        if cyberpunk_text:
-            self._display_content_box(terminal, cyberpunk_text, "CYBERDYNE SYSTEMS", "yellow")
-            terminal.add_output("", "green")
+        # Display cyberpunk flavor text (only for BEGINNER and INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            cyberpunk_text = content.get("cyberpunk_flavor", [])
+            if cyberpunk_text:
+                self._display_content_box(terminal, cyberpunk_text, "CYBERDYNE SYSTEMS", "yellow")
+                terminal.add_output("", "green")
         
-        # Display main explanation
+        # Display main explanation (adapted to complexity level)
         explanation = content.get("explanation", [])
         if explanation:
-            self._display_content_box(terminal, explanation, "PROLOG OVERVIEW", "cyan")
+            adapted_explanation = self._get_complexity_adapted_content(explanation, "explanation")
+            if level == ComplexityLevel.EXPERT:
+                # For experts, just show a brief overview
+                adapted_explanation = [
+                    "Prolog: A declarative logic programming language.",
+                    "You'll work with facts, rules, and queries.",
+                    "This tutorial covers the fundamentals."
+                ]
+            self._display_content_box(terminal, adapted_explanation, "PROLOG OVERVIEW", "cyan")
             terminal.add_output("", "green")
         
-        # Display key concepts in a highlighted box
-        key_concepts = [
-            "🔮 THE THREE PILLARS OF PROLOG:",
-            "",
-            "   ┌─ FACTS ────────────────────────────────────┐",
-            "   │ Things that are unconditionally true       │",
-            "   │ Example: likes(alice, chocolate).          │",
-            "   └─────────────────────────────────────────────┘",
-            "",
-            "   ┌─ RULES ────────────────────────────────────┐", 
-            "   │ Logical relationships and conditions       │",
-            "   │ Example: happy(X) :- likes(X, chocolate).  │",
-            "   └─────────────────────────────────────────────┘",
-            "",
-            "   ┌─ QUERIES ──────────────────────────────────┐",
-            "   │ Questions you ask the system               │", 
-            "   │ Example: ?- likes(alice, chocolate).       │",
-            "   └─────────────────────────────────────────────┘",
-        ]
-        self._display_content_box(terminal, key_concepts, "KEY CONCEPTS", "green")
-        terminal.add_output("", "green")
+        # Display key concepts (detailed for BEGINNER/INTERMEDIATE, brief for ADVANCED/EXPERT)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            key_concepts = [
+                "🔮 THE THREE PILLARS OF PROLOG:",
+                "",
+                "   ┌─ FACTS ────────────────────────────────────┐",
+                "   │ Things that are unconditionally true       │",
+                "   │ Example: likes(alice, chocolate).          │",
+                "   └─────────────────────────────────────────────┘",
+                "",
+                "   ┌─ RULES ────────────────────────────────────┐", 
+                "   │ Logical relationships and conditions       │",
+                "   │ Example: happy(X) :- likes(X, chocolate).  │",
+                "   └─────────────────────────────────────────────┘",
+                "",
+                "   ┌─ QUERIES ──────────────────────────────────┐",
+                "   │ Questions you ask the system               │", 
+                "   │ Example: ?- likes(alice, chocolate).       │",
+                "   └─────────────────────────────────────────────┘",
+            ]
+            self._display_content_box(terminal, key_concepts, "KEY CONCEPTS", "green")
+            terminal.add_output("", "green")
+        elif level == ComplexityLevel.ADVANCED:
+            key_concepts = [
+                "Core Prolog Elements:",
+                "• Facts: likes(alice, chocolate).",
+                "• Rules: happy(X) :- likes(X, chocolate).",
+                "• Queries: ?- likes(alice, chocolate).",
+            ]
+            self._display_content_box(terminal, key_concepts, "KEY CONCEPTS", "green")
+            terminal.add_output("", "green")
+        # EXPERT level: skip key concepts display
         
-        # Display motivational message
-        motivation = [
-            "🚀 Don't worry if this seems different from other programming!",
-            "   Prolog thinks in logic, not step-by-step instructions.",
-            "",
-            "🧠 You're about to learn a completely new way of thinking",
-            "   about problems - the way AI systems reason!",
-            "",
-            "🎯 This tutorial will guide you through each concept",
-            "   with hands-on practice and immediate feedback.",
-        ]
-        self._display_content_box(terminal, motivation, "READY TO BEGIN?", "yellow")
-        terminal.add_output("", "green")
+        # Display motivational message (only for BEGINNER and INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            motivation = [
+                "🚀 Don't worry if this seems different from other programming!",
+                "   Prolog thinks in logic, not step-by-step instructions.",
+                "",
+                "🧠 You're about to learn a completely new way of thinking",
+                "   about problems - the way AI systems reason!",
+                "",
+                "🎯 This tutorial will guide you through each concept",
+                "   with hands-on practice and immediate feedback.",
+            ]
+            self._display_content_box(terminal, motivation, "READY TO BEGIN?", "yellow")
+            terminal.add_output("", "green")
+        elif level == ComplexityLevel.ADVANCED:
+            motivation = [
+                "🎯 This tutorial covers Prolog fundamentals efficiently.",
+                "   You'll work through practical exercises with minimal guidance.",
+            ]
+            self._display_content_box(terminal, motivation, "READY?", "yellow")
+            terminal.add_output("", "green")
+        # EXPERT level: skip motivation
         
-        # Interactive continue prompt
-        continue_prompt = content.get("continue_prompt", "Press ENTER to begin your Prolog journey...")
+        # Interactive continue prompt (adapted to complexity)
+        if level == ComplexityLevel.BEGINNER:
+            continue_prompt = content.get("continue_prompt", "Press ENTER to begin your Prolog journey...")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            continue_prompt = "Press ENTER to start the tutorial..."
+        elif level == ComplexityLevel.ADVANCED:
+            continue_prompt = "Press ENTER to begin..."
+        else:  # EXPERT
+            continue_prompt = "Press ENTER to continue..."
+        
         terminal.add_output("┌" + "─" * (len(continue_prompt) + 2) + "┐", "green")
         terminal.add_output(f"│ {continue_prompt} │", "green")
         terminal.add_output("└" + "─" * (len(continue_prompt) + 2) + "┘", "green")
@@ -212,8 +373,17 @@ class HelloWorldPuzzle(BasePuzzle):
         # Wait for user input (simulated for now - in real implementation this would wait for Enter)
         # For the tutorial flow, we'll automatically continue
         terminal.add_output("", "green")
-        terminal.add_output("🎉 Welcome aboard, future logic programmer!", "yellow")
-        terminal.add_output("   Let's dive into the fascinating world of Prolog!", "cyan")
+        
+        # Closing message adapted to complexity
+        if level == ComplexityLevel.BEGINNER:
+            terminal.add_output("🎉 Welcome aboard, future logic programmer!", "yellow")
+            terminal.add_output("   Let's dive into the fascinating world of Prolog!", "cyan")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            terminal.add_output("✅ Let's get started with Prolog!", "yellow")
+        elif level == ComplexityLevel.ADVANCED:
+            terminal.add_output("→ Beginning tutorial...", "cyan")
+        # EXPERT level: no closing message
+        
         terminal.add_output("", "green")
         
         # Add a completion indicator for integration tests
@@ -348,12 +518,13 @@ class HelloWorldPuzzle(BasePuzzle):
         self._display_content_box(terminal, syntax_breakdown, "SYNTAX BREAKDOWN", "yellow")
         terminal.add_output("", "green")
         
-        # Interactive component identification exercise
-        practice_exercise = content.get("practice_exercise", {})
-        if practice_exercise:
-            success = self._run_component_identification_exercise(terminal, practice_exercise)
-            if not success:
-                return False  # User chose to exit or failed repeatedly
+        # Interactive component identification exercise (only for BEGINNER and INTERMEDIATE)
+        if self._should_show_component_exercise():
+            practice_exercise = content.get("practice_exercise", {})
+            if practice_exercise:
+                success = self._run_component_identification_exercise(terminal, practice_exercise)
+                if not success:
+                    return False  # User chose to exit or failed repeatedly
         
         # Display completion message
         completion_message = [
@@ -887,6 +1058,7 @@ class HelloWorldPuzzle(BasePuzzle):
     def _run_variable_query_creation(self, terminal, expected_pattern: str, expected_answer: str) -> bool:
         """
         Run the interactive variable query creation with validation and hints.
+        Adapts to complexity level for attempt limits.
         
         Args:
             terminal: Terminal interface for interaction
@@ -897,7 +1069,7 @@ class HelloWorldPuzzle(BasePuzzle):
             True if exercise completed successfully, False if user exited
         """
         attempt_count = 0
-        max_attempts = 5
+        max_attempts = self._get_max_attempts_for_exercise()
         
         while attempt_count < max_attempts:
             attempt_count += 1
@@ -1136,6 +1308,7 @@ class HelloWorldPuzzle(BasePuzzle):
     def _run_fact_creation_exercise(self, terminal, content: dict) -> bool:
         """
         Run the interactive fact creation exercise with progressive hints.
+        Adapts to complexity level for attempt limits and hint detail.
         
         Args:
             terminal: Terminal interface for interaction
@@ -1149,7 +1322,7 @@ class HelloWorldPuzzle(BasePuzzle):
         validation_hints = content.get("validation_hints", [])
         
         attempt_count = 0
-        max_attempts = 5  # Allow reasonable number of attempts
+        max_attempts = self._get_max_attempts_for_exercise()  # Complexity-adapted attempts
         
         while attempt_count < max_attempts:
             attempt_count += 1
@@ -1344,9 +1517,9 @@ class HelloWorldPuzzle(BasePuzzle):
         self._display_content_box(terminal, exercise_intro, "QUERY WRITING EXERCISE", "yellow")
         terminal.add_output("", "green")
         
-        # Interactive query creation with progressive hints
+        # Interactive query creation with progressive hints (complexity-adapted)
         attempt_count = 0
-        max_attempts = 5
+        max_attempts = self._get_max_attempts_for_exercise()
         
         while attempt_count < max_attempts:
             attempt_count += 1
@@ -2039,6 +2212,7 @@ class HelloWorldPuzzle(BasePuzzle):
         Explains uppercase variable syntax, shows how variables match multiple values,
         implements interactive variable query creation exercise, adds validation for
         proper variable usage, and demonstrates how Prolog finds all solutions.
+        Adapts content detail and examples based on complexity level.
         
         Args:
             terminal: Terminal interface for output
@@ -2048,66 +2222,110 @@ class HelloWorldPuzzle(BasePuzzle):
         """
         # Get the variables introduction content
         content = self.tutorial_session.get_current_content()
+        level = self.get_complexity_level()
         
         # Clear terminal for fresh start
         terminal.clear_terminal()
         
-        # Display step header
+        # Display step header (adapted to complexity)
         terminal.add_output("", "green")  # Empty line for spacing
         terminal.add_output("=" * 60, "cyan")
-        terminal.add_output(content.get("title", "🔤 Variables: The Power of 'What If?'").center(60), "yellow")
-        terminal.add_output(content.get("subtitle", "Finding Multiple Answers").center(60), "cyan")
+        
+        if level == ComplexityLevel.BEGINNER:
+            title = content.get("title", "🔤 Variables: The Power of 'What If?'")
+            subtitle = content.get("subtitle", "Finding Multiple Answers")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            title = "Variables in Prolog"
+            subtitle = "Pattern Matching with Variables"
+        elif level == ComplexityLevel.ADVANCED:
+            title = "Prolog Variables"
+            subtitle = "Advanced Pattern Matching"
+        else:  # EXPERT
+            title = "Variables"
+            subtitle = "Pattern Matching"
+        
+        terminal.add_output(title.center(60), "yellow")
+        terminal.add_output(subtitle.center(60), "cyan")
         terminal.add_output("=" * 60, "cyan")
         terminal.add_output("", "green")
         
-        # Display main explanation with variable syntax
+        # Display main explanation with variable syntax (adapted)
         explanation = content.get("explanation", [])
         if explanation:
-            self._display_content_box(terminal, explanation, "UNDERSTANDING VARIABLES", "cyan")
+            adapted_explanation = self._get_complexity_adapted_content(explanation, "explanation")
+            if level == ComplexityLevel.EXPERT:
+                adapted_explanation = [
+                    "Variables (uppercase) match any value in queries.",
+                    "Example: ?- likes(X, chocolate). finds all X."
+                ]
+            self._display_content_box(terminal, adapted_explanation, "UNDERSTANDING VARIABLES", "cyan")
             terminal.add_output("", "green")
         
-        # Display detailed variable syntax rules in a highlighted box
-        variable_rules = [
-            "🔍 VARIABLE RULES TO REMEMBER:",
-            "",
-            "   ✅ Variables start with UPPERCASE letters:",
-            "      X, Y, Person, Thing, Something, Answer",
-            "",
-            "   ✅ Variables can match any value:",
-            "      X can be 'chocolate', 'pizza', 'books', etc.",
-            "",
-            "   ✅ Same variable name = same value:",
-            "      If X = 'chocolate' in one place, X = 'chocolate' everywhere",
-            "",
-            "   ❌ Don't use lowercase for variables:",
-            "      'person' is an atom, 'Person' is a variable",
-        ]
-        self._display_content_box(terminal, variable_rules, "VARIABLE SYNTAX RULES", "yellow")
-        terminal.add_output("", "green")
+        # Display detailed variable syntax rules (only for BEGINNER and INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            variable_rules = [
+                "🔍 VARIABLE RULES TO REMEMBER:",
+                "",
+                "   ✅ Variables start with UPPERCASE letters:",
+                "      X, Y, Person, Thing, Something, Answer",
+                "",
+                "   ✅ Variables can match any value:",
+                "      X can be 'chocolate', 'pizza', 'books', etc.",
+                "",
+                "   ✅ Same variable name = same value:",
+                "      If X = 'chocolate' in one place, X = 'chocolate' everywhere",
+                "",
+                "   ❌ Don't use lowercase for variables:",
+                "      'person' is an atom, 'Person' is a variable",
+            ]
+            self._display_content_box(terminal, variable_rules, "VARIABLE SYNTAX RULES", "yellow")
+            terminal.add_output("", "green")
+        elif level == ComplexityLevel.ADVANCED:
+            variable_rules = [
+                "Variable Rules:",
+                "• Uppercase: X, Person, Thing",
+                "• Match any value",
+                "• Same name = same value throughout query",
+            ]
+            self._display_content_box(terminal, variable_rules, "SYNTAX", "yellow")
+            terminal.add_output("", "green")
+        # EXPERT: skip rules display
         
-        # Demonstrate how variables work with multiple solutions
-        self._demonstrate_variable_matching(terminal)
-        terminal.add_output("", "green")
+        # Demonstrate how variables work with multiple solutions (only for BEGINNER/INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            self._demonstrate_variable_matching(terminal)
+            terminal.add_output("", "green")
         
-        # Show examples of variable queries
-        examples_content = [
-            "🎯 VARIABLE QUERY EXAMPLES:",
-            "",
-            "Given these facts:",
-            "   likes(alice, chocolate).",
-            "   likes(alice, ice_cream).",
-            "   likes(bob, pizza).",
-            "   likes(charlie, chocolate).",
-            "",
-            "Variable queries you can ask:",
-            "   ?- likes(alice, X).        ← What does Alice like?",
-            "   ?- likes(Person, chocolate). ← Who likes chocolate?",
-            "   ?- likes(X, Y).            ← Who likes what?",
-            "",
-            "🔮 Prolog will find ALL matching solutions!",
-        ]
-        self._display_content_box(terminal, examples_content, "VARIABLE EXAMPLES", "green")
-        terminal.add_output("", "green")
+        # Show examples of variable queries (adapted to complexity)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            examples_content = [
+                "🎯 VARIABLE QUERY EXAMPLES:",
+                "",
+                "Given these facts:",
+                "   likes(alice, chocolate).",
+                "   likes(alice, ice_cream).",
+                "   likes(bob, pizza).",
+                "   likes(charlie, chocolate).",
+                "",
+                "Variable queries you can ask:",
+                "   ?- likes(alice, X).        ← What does Alice like?",
+                "   ?- likes(Person, chocolate). ← Who likes chocolate?",
+                "   ?- likes(X, Y).            ← Who likes what?",
+                "",
+                "🔮 Prolog will find ALL matching solutions!",
+            ]
+            self._display_content_box(terminal, examples_content, "VARIABLE EXAMPLES", "green")
+            terminal.add_output("", "green")
+        elif level == ComplexityLevel.ADVANCED:
+            examples_content = [
+                "Examples:",
+                "?- likes(alice, X).        ← Find what Alice likes",
+                "?- likes(Person, chocolate). ← Find who likes chocolate",
+                "?- likes(X, Y).            ← Find all relationships",
+            ]
+            self._display_content_box(terminal, examples_content, "EXAMPLES", "green")
+            terminal.add_output("", "green")
+        # EXPERT: skip examples
         
         # Interactive variable query creation exercise
         practice_exercise = content.get("practice_exercise", {})
@@ -2116,26 +2334,52 @@ class HelloWorldPuzzle(BasePuzzle):
             if not success:
                 return False  # User chose to exit or failed repeatedly
         
-        # Display completion message
-        completion_message = [
-            "🎉 Outstanding! You've mastered Prolog variables!",
-            "",
-            "✅ You understand that variables start with uppercase letters",
-            "✅ You know how variables can match multiple values",
-            "✅ You can write queries to find patterns and relationships",
-            "✅ You understand how Prolog finds all possible solutions",
-            "",
-            "🚀 Variables are the key to Prolog's power!",
-            "   They let you ask flexible questions and discover",
-            "   patterns in your data that you might not have noticed.",
-            "",
-            "You're now ready to complete your Prolog journey!",
-        ]
+        # Display completion message (adapted to complexity)
+        if level == ComplexityLevel.BEGINNER:
+            completion_message = [
+                "🎉 Outstanding! You've mastered Prolog variables!",
+                "",
+                "✅ You understand that variables start with uppercase letters",
+                "✅ You know how variables can match multiple values",
+                "✅ You can write queries to find patterns and relationships",
+                "✅ You understand how Prolog finds all possible solutions",
+                "",
+                "🚀 Variables are the key to Prolog's power!",
+                "   They let you ask flexible questions and discover",
+                "   patterns in your data that you might not have noticed.",
+                "",
+                "You're now ready to complete your Prolog journey!",
+            ]
+        elif level == ComplexityLevel.INTERMEDIATE:
+            completion_message = [
+                "✅ Variables mastered!",
+                "",
+                "You can now:",
+                "• Use variables in queries",
+                "• Find multiple solutions",
+                "• Write pattern-matching queries",
+            ]
+        elif level == ComplexityLevel.ADVANCED:
+            completion_message = [
+                "Variables complete.",
+                "Ready for advanced challenges.",
+            ]
+        else:  # EXPERT
+            completion_message = [
+                "Complete.",
+            ]
+        
         self._display_content_box(terminal, completion_message, "VARIABLES MASTERED", "green")
         terminal.add_output("", "green")
         
-        # Continue prompt
-        continue_prompt = content.get("continue_prompt", "Press ENTER to complete your Prolog tutorial...")
+        # Continue prompt (adapted)
+        if level == ComplexityLevel.BEGINNER:
+            continue_prompt = content.get("continue_prompt", "Press ENTER to complete your Prolog tutorial...")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            continue_prompt = "Press ENTER to continue..."
+        else:  # ADVANCED/EXPERT
+            continue_prompt = "Press ENTER..."
+        
         terminal.add_output("┌" + "─" * (len(continue_prompt) + 2) + "┐", "green")
         terminal.add_output(f"│ {continue_prompt} │", "green")
         terminal.add_output("└" + "─" * (len(continue_prompt) + 2) + "┘", "green")
@@ -2153,6 +2397,7 @@ class HelloWorldPuzzle(BasePuzzle):
         Implements congratulatory messaging, comprehensive summary of learned concepts,
         connection narrative to main Logic Quest adventure, options for proceeding
         to main game or reviewing concepts, and completion tracking for progress system.
+        Adapts messaging and detail level based on complexity.
         
         Args:
             terminal: Terminal interface for output
@@ -2162,59 +2407,99 @@ class HelloWorldPuzzle(BasePuzzle):
         """
         # Get the completion content
         content = self.tutorial_session.get_current_content()
+        level = self.get_complexity_level()
         
         # Clear terminal for fresh start
         terminal.clear_terminal()
         
-        # Display celebration header with cyberpunk flair
+        # Display celebration header with cyberpunk flair (always show for atmosphere)
         terminal.add_output("", "green")  # Empty line for spacing
         self._display_completion_celebration(terminal)
         terminal.add_output("", "green")
         
-        # Display main congratulatory message
+        # Display main congratulatory message (adapted to complexity)
         terminal.add_output("=" * 60, "yellow")
-        terminal.add_output(content.get("title", "🎊 Congratulations, Logic Programmer!").center(60), "yellow")
-        terminal.add_output(content.get("subtitle", "You've Mastered the Basics!").center(60), "cyan")
+        if level == ComplexityLevel.BEGINNER:
+            title = content.get("title", "🎊 Congratulations, Logic Programmer!")
+            subtitle = content.get("subtitle", "You've Mastered the Basics!")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            title = "✅ Tutorial Complete!"
+            subtitle = "Prolog Fundamentals Mastered"
+        elif level == ComplexityLevel.ADVANCED:
+            title = "Tutorial Complete"
+            subtitle = "Ready for Advanced Challenges"
+        else:  # EXPERT
+            title = "Complete"
+            subtitle = "Fundamentals Reviewed"
+        
+        terminal.add_output(title.center(60), "yellow")
+        terminal.add_output(subtitle.center(60), "cyan")
         terminal.add_output("=" * 60, "yellow")
         terminal.add_output("", "green")
         
-        # Display celebration message with achievements
-        celebration = content.get("celebration", [])
-        if celebration:
-            self._display_content_box(terminal, celebration, "🌟 MISSION ACCOMPLISHED", "green")
-            terminal.add_output("", "green")
+        # Display celebration message with achievements (detailed for BEGINNER/INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            celebration = content.get("celebration", [])
+            if celebration:
+                self._display_content_box(terminal, celebration, "🌟 MISSION ACCOMPLISHED", "green")
+                terminal.add_output("", "green")
         
-        # Display comprehensive summary of learned concepts
+        # Display comprehensive summary of learned concepts (adapted to complexity)
         summary = content.get("summary", [])
         if summary:
+            if level == ComplexityLevel.EXPERT:
+                # Brief summary for experts
+                summary = [
+                    "Core concepts covered:",
+                    "• Facts, Queries, Variables"
+                ]
+            elif level == ComplexityLevel.ADVANCED:
+                # Condensed summary for advanced
+                summary = summary[:5] if len(summary) > 5 else summary
+            
             self._display_content_box(terminal, summary, "📚 QUICK REFERENCE", "cyan")
             terminal.add_output("", "green")
         
-        # Display user's personal achievements
-        self._display_personal_achievements(terminal)
-        terminal.add_output("", "green")
+        # Display user's personal achievements (only for BEGINNER and INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            self._display_personal_achievements(terminal)
+            terminal.add_output("", "green")
         
-        # Display connection narrative to main Logic Quest adventure
+        # Display connection narrative to main Logic Quest adventure (adapted)
         next_steps = content.get("next_steps", [])
         if next_steps:
+            if level == ComplexityLevel.EXPERT:
+                next_steps = ["Proceed to main adventure for advanced challenges."]
+            elif level == ComplexityLevel.ADVANCED:
+                next_steps = next_steps[:3] if len(next_steps) > 3 else next_steps
+            
             self._display_content_box(terminal, next_steps, "🚀 YOUR NEXT ADVENTURE", "yellow")
             terminal.add_output("", "green")
         
-        # Display cyberpunk transition narrative
-        self._display_cyberpunk_transition(terminal)
-        terminal.add_output("", "green")
+        # Display cyberpunk transition narrative (only for BEGINNER and INTERMEDIATE)
+        if level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
+            self._display_cyberpunk_transition(terminal)
+            terminal.add_output("", "green")
         
-        # Implement options for proceeding
+        # Implement options for proceeding (simplified for higher complexity)
         options = content.get("options", {})
-        if options:
+        if options and level in [ComplexityLevel.BEGINNER, ComplexityLevel.INTERMEDIATE]:
             self._display_completion_options(terminal, options)
             terminal.add_output("", "green")
         
         # Add completion tracking for progress system
         self._track_tutorial_completion()
         
-        # Display final completion message
-        terminal.add_output("🎉 Tutorial completed successfully! Welcome to the world of logic programming!", "green")
+        # Display final completion message (adapted to complexity)
+        if level == ComplexityLevel.BEGINNER:
+            terminal.add_output("🎉 Tutorial completed successfully! Welcome to the world of logic programming!", "green")
+        elif level == ComplexityLevel.INTERMEDIATE:
+            terminal.add_output("✅ Tutorial complete. You're ready for the main adventure!", "green")
+        elif level == ComplexityLevel.ADVANCED:
+            terminal.add_output("→ Tutorial complete. Proceeding to advanced content.", "cyan")
+        else:  # EXPERT
+            terminal.add_output("Complete.", "green")
+        
         terminal.add_output("", "green")
         
         # Add completion indicator for integration tests
@@ -2367,16 +2652,25 @@ class HelloWorldPuzzle(BasePuzzle):
 
     # Required BasePuzzle abstract methods (simplified for tutorial)
     def get_description(self) -> str:
-        """Get the tutorial description."""
-        return (
+        """Get the tutorial description adapted to complexity level."""
+        base_description = (
             "Welcome to the Hello World Prolog Challenge!\n\n"
             "This interactive tutorial will teach you the absolute basics of Prolog programming:\n"
             "• What Prolog is and how it works\n"
             "• How to create facts (statements of truth)\n"
             "• How to write queries (ask questions)\n"
             "• How to use variables to find multiple answers\n\n"
-            "Perfect for complete beginners - no prior Prolog experience needed!"
         )
+        
+        # Add complexity-appropriate ending
+        if self.should_show_examples():
+            base_description += "Perfect for complete beginners - no prior Prolog experience needed!"
+            if self.should_provide_template():
+                base_description += "\n\nTemplates and examples will be provided to guide you."
+        else:
+            base_description += "A focused introduction to Prolog fundamentals."
+        
+        return base_description
 
     def get_initial_context(self) -> Dict[str, Any]:
         """Get initial tutorial context."""
@@ -2389,31 +2683,44 @@ class HelloWorldPuzzle(BasePuzzle):
 
     def validate_solution(self, user_input: str) -> ValidationResult:
         """
-        Validate user input based on current tutorial step.
+        Validate user input based on current tutorial step with complexity awareness.
         
-        This method adapts validation based on what step the user is currently on.
+        This method adapts validation based on what step the user is currently on
+        and applies complexity-appropriate feedback.
         
         Args:
             user_input: The user's input to validate
             
         Returns:
-            ValidationResult with success status and feedback
+            ValidationResult with success status and complexity-adapted feedback
         """
         current_step = self.tutorial_session.navigator.get_current_step()
         
         # Route validation to appropriate step-specific method
         if current_step == TutorialStep.FACT_CREATION:
-            return self._validate_fact_creation(user_input)
+            result = self._validate_fact_creation(user_input)
         elif current_step == TutorialStep.QUERIES_EXPLANATION:
-            return self._validate_query_creation(user_input)
+            result = self._validate_query_creation(user_input)
         elif current_step == TutorialStep.VARIABLES_INTRODUCTION:
-            return self._validate_variable_query(user_input)
+            result = self._validate_variable_query(user_input)
         else:
             # For non-interactive steps, just accept any input
-            return ValidationResult(is_valid=True)
+            result = ValidationResult(is_valid=True)
+        
+        # Apply complexity-aware feedback adaptation if validation failed
+        if not result.is_valid:
+            adapted_feedback = self.get_complexity_adapted_feedback(result)
+            # Update the result with adapted feedback
+            result = ValidationResult(
+                is_valid=False,
+                error_message=adapted_feedback,
+                hint=result.hint
+            )
+        
+        return result
 
     def _validate_fact_creation(self, user_input: str) -> ValidationResult:
-        """Validate fact creation exercise."""
+        """Validate fact creation exercise with complexity-aware feedback."""
         # Use the PrologValidator to check basic syntax
         result = PrologValidator.validate_fact(user_input)
         
@@ -2423,11 +2730,17 @@ class HelloWorldPuzzle(BasePuzzle):
         else:
             # Record the mistake
             self.tutorial_session.record_mistake()
+            # Apply complexity-aware feedback adaptation
+            result = ValidationResult(
+                is_valid=False,
+                error_message=result.error_message,
+                hint=result.hint
+            )
             
         return result
 
     def _validate_query_creation(self, user_input: str) -> ValidationResult:
-        """Validate query creation exercise."""
+        """Validate query creation exercise with complexity-aware feedback."""
         # Use the PrologValidator to check query syntax
         result = PrologValidator.validate_query(user_input)
         
@@ -2441,7 +2754,7 @@ class HelloWorldPuzzle(BasePuzzle):
         return result
 
     def _validate_variable_query(self, user_input: str) -> ValidationResult:
-        """Validate variable query exercise."""
+        """Validate variable query exercise with complexity-aware feedback."""
         # Check if it's a valid query first
         result = PrologValidator.validate_query(user_input)
         
@@ -2451,10 +2764,19 @@ class HelloWorldPuzzle(BasePuzzle):
                 self.tutorial_session.record_user_input("query", user_input)
                 return ValidationResult(is_valid=True)
             else:
+                # Provide complexity-appropriate error message
+                explanation_depth = self.complexity_manager.get_explanation_depth()
+                if explanation_depth.value in ["detailed", "moderate"]:
+                    error_msg = "Your query should contain at least one variable (starting with uppercase letter)."
+                    hint_msg = "Variables in Prolog start with uppercase letters like X, Person, Thing, etc."
+                else:
+                    error_msg = "Query needs a variable."
+                    hint_msg = "Use uppercase letters for variables."
+                
                 return ValidationResult(
                     is_valid=False,
-                    error_message="Your query should contain at least one variable (starting with uppercase letter).",
-                    hint="Variables in Prolog start with uppercase letters like X, Person, Thing, etc."
+                    error_message=error_msg,
+                    hint=hint_msg
                 )
         else:
             self.tutorial_session.record_mistake()

@@ -1,0 +1,24 @@
+{
+  "name": "Advanced",
+  "description": "Minimal guidance with complex problems and multiple solution paths",
+  "hint_frequency": "after_attempts",
+  "explanation_depth": "brief",
+  "puzzle_parameters": {
+    "max_variables": 6,
+    "max_predicates": 8,
+    "allow_complex_syntax": true,
+    "provide_templates": false,
+    "show_examples": false,
+    "include_step_by_step": false,
+    "syntax_assistance": false,
+    "concept_reinforcement": false,
+    "require_optimization": true,
+    "multiple_solutions": true
+  },
+  "ui_indicators": {
+    "color": "yellow",
+    "icon": "🔥",
+    "badge": "ADVANCED"
+  },
+  "scoring_multiplier": 1.5
+}

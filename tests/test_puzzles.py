@@ -175,8 +175,9 @@ class TestBasePuzzle:
         hint1 = self.puzzle.request_hint()
         hint2 = self.puzzle.request_hint()
 
-        assert hint1 == "Hint 1"
-        assert hint2 == "Hint 2"
+        # Hints are now complexity-adapted, so check they are non-empty strings
+        assert isinstance(hint1, str) and len(hint1) > 0
+        assert isinstance(hint2, str) and len(hint2) > 0
         assert self.puzzle.hints_used == 2
 
         # Solve correctly
@@ -266,9 +267,10 @@ class TestPuzzleManager:
 
     def test_manager_initialization(self):
         """Test that puzzle manager initializes correctly."""
-        # HelloWorldPuzzle is automatically registered, so we expect 1 puzzle
-        assert len(self.manager.available_puzzles) == 1
+        # HelloWorldPuzzle and MemoryStackPuzzle are automatically registered, so we expect 2 puzzles
+        assert len(self.manager.available_puzzles) == 2
         assert "hello_world_prolog" in self.manager.available_puzzles
+        assert "memory_stack_failure" in self.manager.available_puzzles
         assert len(self.manager.completed_puzzles) == 0
         assert self.manager.current_puzzle is None
 
@@ -285,9 +287,10 @@ class TestPuzzleManager:
         self.manager.register_puzzle(self.puzzle1)
         self.manager.register_puzzle(self.puzzle2)
 
-        # HelloWorldPuzzle is automatically registered, so we expect 3 total
-        assert len(self.manager.available_puzzles) == 3
+        # HelloWorldPuzzle and MemoryStackPuzzle are automatically registered, so we expect 4 total
+        assert len(self.manager.available_puzzles) == 4
         assert "hello_world_prolog" in self.manager.available_puzzles
+        assert "memory_stack_failure" in self.manager.available_puzzles
         assert "puzzle1" in self.manager.available_puzzles
         assert "puzzle2" in self.manager.available_puzzles
 
@@ -309,10 +312,11 @@ class TestPuzzleManager:
         beginner_puzzles = self.manager.get_puzzles_by_difficulty(
             PuzzleDifficulty.BEGINNER
         )
-        # HelloWorldPuzzle is also BEGINNER, so we expect 2
-        assert len(beginner_puzzles) == 2
+        # HelloWorldPuzzle and MemoryStackPuzzle are also BEGINNER, so we expect 3
+        assert len(beginner_puzzles) == 3
         puzzle_ids = [p.puzzle_id for p in beginner_puzzles]
         assert "hello_world_prolog" in puzzle_ids
+        assert "memory_stack_failure" in puzzle_ids
         assert "puzzle1" in puzzle_ids
 
         advanced_puzzles = self.manager.get_puzzles_by_difficulty(
@@ -343,10 +347,11 @@ class TestPuzzleManager:
         # Start the puzzle
         result = self.manager.start_puzzle("puzzle1")
         assert result is True
-        assert self.manager.current_puzzle is self.puzzle1
+        # Current puzzle should be an adapted copy with the same ID
+        assert self.manager.current_puzzle.puzzle_id == self.puzzle1.puzzle_id
 
-        # Puzzle should be reset when started
-        assert self.puzzle1.attempts == 0
+        # Current puzzle should be reset when started
+        assert self.manager.current_puzzle.attempts == 0
         assert self.puzzle1.hints_used == 0
         assert self.puzzle1.completed is False
 
@@ -392,7 +397,8 @@ class TestPuzzleManager:
         self.manager.start_puzzle("puzzle1")
 
         hint = self.manager.get_hint()
-        assert hint == "Hint 1"
+        # Hints are now complexity-adapted, so check they are non-empty strings
+        assert isinstance(hint, str) and len(hint) > 0
         assert (
             self.manager.player_stats["total_hints_used"] == 0
         )  # Not updated until completion
@@ -414,9 +420,9 @@ class TestPuzzleManager:
         summary = self.manager.get_progress_summary()
 
         assert summary["puzzles_completed"] == 1
-        # HelloWorldPuzzle is automatically registered, so total is 3
-        assert summary["total_puzzles"] == 3
-        assert abs(summary["completion_percentage"] - (100.0 / 3)) < 0.01  # 1/3 completed
+        # HelloWorldPuzzle and MemoryStackPuzzle are automatically registered, so total is 4
+        assert summary["total_puzzles"] == 4
+        assert abs(summary["completion_percentage"] - 25.0) < 0.01  # 1/4 completed
         assert summary["total_score"] > 0
         assert summary["average_score"] > 0
         assert "hello_world_completed" in summary
@@ -593,6 +599,6 @@ class TestPuzzleIntegration:
 
         # Check progress summary
         summary = manager.get_progress_summary()
-        # HelloWorldPuzzle is automatically registered, so completion is 50% (1 out of 2)
-        assert summary["completion_percentage"] == 50.0  # 1 out of 2 puzzles
+        # HelloWorldPuzzle and MemoryStackPuzzle are automatically registered, so completion is 33.33% (1 out of 3)
+        assert abs(summary["completion_percentage"] - (100.0 / 3)) < 0.01  # 1 out of 3 puzzles
         assert summary["average_score"] > 0
