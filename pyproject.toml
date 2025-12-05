@@ -7,6 +7,7 @@ name = "prologresurrected"
 version = "0.1.0"
 description = "Logic Quest - A Prolog Learning Game"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.13"
 dependencies = [
     "reflex>=0.6.0",
